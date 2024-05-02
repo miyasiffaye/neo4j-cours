@@ -38,6 +38,7 @@ Pour ce cours nous allons installer a version 5.17 de neo4j qui requiert java 17
 4. Taper .\neo4j.bat console
 5. Puis ouvrir http://localhost:7474/browser/
     ![img_7.png](img_7.png)
-    Le user et le mot de pass par defaut est : neo4j / neo4j . Il vous demandera de  changer le mot de pass
+    Le user et le mot de pass par defaut est : neo4j / neo4j . 
+    Il vous demandera de  changer le mot de pass
    **Bravo Vous venez d'installer votre serveur neo4j.**
 
