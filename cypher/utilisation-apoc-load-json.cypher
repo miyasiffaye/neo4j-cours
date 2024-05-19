@@ -20,5 +20,8 @@ WITH * WHERE NOT q.owner.user_id IS NULL
 MERGE (owner:User {id:q.owner.user_id}) ON CREATE SET owner.display_name = q.owner.display_name
 MERGE (owner)-[:ASKED]->(question)
 
-3. Depuis votre PC
-CALL apoc.import.json("file:///all.json")
+3. Import depuis  votre PC
+
+    1. CALL apoc.import.json("file:///all.json")
+
+ Vous devez avoir une erreur. Analyser et corriger.
