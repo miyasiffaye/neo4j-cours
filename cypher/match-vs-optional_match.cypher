@@ -1,4 +1,4 @@
-########################Query Populate database####################
+//########################Query Populate database####################
 CREATE
   (charlie:Person {name: 'Charlie Sheen'}),
   (martin:Person {name: 'Martin Sheen'}),
@@ -14,31 +14,37 @@ CREATE
   (martin)-[:ACTED_IN {role: 'A.J. MacInerney'}]->(thePresident),
   (michael)-[:ACTED_IN {role: 'President Andrew Shepherd'}]->(thePresident),
   (rob)-[:DIRECTED]->(thePresident),
-  (martin)-[:FATHER_OF]->(charlie)
+  (martin)-[:FATHER_OF]->(charlie),
+  (rob)-[:COUSIN]->(charlie)
 
-#################Query Get all nodes##############################
+
+Exo : Creer des leations entre des entites existantes.
+///CREATE (rob:Person {name: 'Rob Reiner'})-[:COUSIN]->(michael:Person {name: 'Michael Douglas'})
+
+
+//#################Query Get all nodes##############################
 MATCH (n)
 RETURN n
-##################Query Get all nodes with a label##################
+//##################Query Get all nodes with a label##################
 MATCH (movie:Movie)
 RETURN movie.title
-##################Query Related nodes###############################
-##Returns tous les films  directed par  Oliver Stone.
+//##################Query Related nodes###############################
+//##Returns tous les films  directed par  Oliver Stone.
 MATCH (director {name: 'Oliver Stone'})--(movie)
 RETURN movie.title
-#################### Match en utilisant le  label  de la liste des labels  ##############
-### Ici cette expression Movie|Person  veut dire Movie ou Person
+//#################### Match en utilisant le  label  de la liste des labels  ##############
+//### Ici cette expression Movie|Person  veut dire Movie ou Person
 MATCH (n:Movie|Person)
 RETURN n.name AS name, n.title AS title
-#################### Match en utilisant plusieurs relationships  ##############
+//#################### Match en utilisant plusieurs relationships  ##############
 MATCH (wallstreet {title: 'Wall Street'})<-[:ACTED_IN|DIRECTED]-(person)
 RETURN person.name
 
 MATCH (charlie {name: 'Charlie Sheen'})-[:ACTED_IN]->(movie)<-[:DIRECTED]-(director)
 RETURN movie.title, director.name
 
-######################OPTIONAL MATCH#####################################
-### Rejouer cette requete dans une base vide
+//######################OPTIONAL MATCH#####################################
+//### Rejouer cette requete dans une base vide
 CREATE
   (charlie:Person {name: 'Charlie Sheen'}),
   (martin:Person {name: 'Martin Sheen'}),
@@ -55,7 +61,7 @@ CREATE
   (michael)-[:ACTED_IN]->(thePresident),
   (rob)-[:DIRECTED]->(thePresident),
   (martin)-[:FATHER_OF]->(charlie)
-###################Comparer les resultats de ces 2 requetes suivantes ####################
+//###################Comparer les resultats de ces 2 requetes suivantes ####################
 1.
     MATCH (a:Person {name: 'Martin Sheen'})
     MATCH (a)-[r:DIRECTED]->()
@@ -69,7 +75,7 @@ CREATE
     OPTIONAL MATCH (a)-->(x)
     RETURN x
 
-######### UNWIND et WITH #########################################
+//######### UNWIND et WITH #########################################
 1.
     WITH
       [1, 2] AS a,
@@ -112,7 +118,7 @@ CREATE
     MERGE (y)<-[:IN]-(e:Event {id: event.id})
     RETURN e.id AS x ORDER BY x
 
-  ############### CALL CLAUSE ##########################
+  //############### CALL CLAUSE ##########################
   1.Creer une base et inserer
       CREATE
       (a:Person:Child {name: 'Alice', age: 20}),
