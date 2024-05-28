@@ -18,9 +18,12 @@ CREATE
   (rob)-[:COUSIN]->(charlie)
 
 
-Exo : Creer des leations entre des entites existantes.
+Exo : Creer des relations entre des entites existantes// COUSIN,BROTHER
+
+
 Match(rob:Person where rob.name = 'Rob Reiner'),
      (michael:Person where michael.name ='Michael Douglas')
+
 MERGE(rob)-[:COUSIN]->(michael)
 
 //#################Query Get all nodes##############################
