@@ -1,0 +1,9 @@
+ git clone [url distant] // recup repos distant
+ git checkout -b [branch_local,feature/feat-1452]
+ git commit -m " ajout d'un bouton sur x ihm" .
+ git push 
+
+ git pull // recupere tous les changement
+
+ git merge //pour fusionner
+
