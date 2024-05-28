@@ -19,8 +19,9 @@ CREATE
 
 
 Exo : Creer des leations entre des entites existantes.
-///CREATE (rob:Person {name: 'Rob Reiner'})-[:COUSIN]->(michael:Person {name: 'Michael Douglas'})
-
+Match(rob:Person where rob.name = 'Rob Reiner'),
+     (michael:Person where michael.name ='Michael Douglas')
+MERGE(rob)-[:COUSIN]->(michael)
 
 //#################Query Get all nodes##############################
 MATCH (n)

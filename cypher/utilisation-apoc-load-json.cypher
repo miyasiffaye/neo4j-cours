@@ -23,6 +23,9 @@ MERGE (owner)-[:ASKED]->(question)
 
 3. Import depuis  votre PC
 
-    1. CALL apoc.import.json("file:///all.json")
+    1. CALL apoc.import.json("file:///d:/neo4j/data/all.json")
 
  Vous devez avoir une erreur. Analyser et corriger.
+
+4. Import un fichier cypher
+call apoc.cypher.runFile('file:///d:/neo4j/data/movie.cypher',{statistics:true})
