@@ -8,11 +8,9 @@ import java.util.stream.Stream;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.logging.Log;
-import org.neo4j.procedure.Context;
-import org.neo4j.procedure.Description;
-import org.neo4j.procedure.Name;
-import org.neo4j.procedure.Procedure;
+import org.neo4j.procedure.*;
 
 /**
  * This is an example showing how you could expose Neo4j's full text indexes as
@@ -25,16 +23,24 @@ public class GetRelationshipTypes {
     @Context
     public Log log;
 
+    @Context
+    public Transaction transaction ;
+
+
     /**
      * This procedure takes a Node and gets the relationships going in and out of it
      *
      * @param node  The node to get the relationships for
      * @return  A RelationshipTypes instance with the relations (incoming and outgoing) for a given node.
      */
-    @Procedure(name = "example.getRelationshipTypes")
+
+    @Procedure(name = "example.getRelationshipTypes" , mode = Mode.READ)
     @Description("Get the different relationships going in and out of a node.")
     public Stream<RelationshipTypes> getRelationshipTypes(@Name("node") Node node) {
+
+        log.debug("TEST log");
         List<String> outgoing = new ArrayList<>();
+
         node.getRelationships(Direction.OUTGOING).iterator()
             .forEachRemaining(rel -> AddDistinct(outgoing, rel));
 
@@ -42,7 +48,18 @@ public class GetRelationshipTypes {
         node.getRelationships(Direction.INCOMING).iterator()
                 .forEachRemaining(rel -> AddDistinct(incoming, rel));
 
+
         return Stream.of(new RelationshipTypes(incoming, outgoing));
+    }
+
+    @Procedure(name = "example.dropIndex" )
+    @Description(" mettez le texte que vous voulez")
+    public Stream<String> manageIndex() {
+
+        // TODO : creer des index si ça n'existe pas sur certains champs de votre choix dans ne base de votre choix.
+
+
+        return Stream.empty();
     }
 
     /**
@@ -91,12 +108,12 @@ public class GetRelationshipTypes {
      */
     public static class RelationshipTypes {
         // These records contain two lists of distinct relationship types going in and out of a Node.
-        public List<String> outgoing;
-        public List<String> incoming;
+        public List<String> out;
+        public List<String> inc;
 
         public RelationshipTypes(List<String> incoming, List<String> outgoing) {
-            this.outgoing = outgoing;
-            this.incoming = incoming;
+            this.out = outgoing;
+            this.inc = incoming;
         }
     }
 }
