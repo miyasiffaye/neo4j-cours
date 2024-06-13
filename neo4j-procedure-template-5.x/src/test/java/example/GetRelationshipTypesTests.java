@@ -50,8 +50,8 @@ public class GetRelationshipTypesTests {
      */
     @Test
     public void shouldReturnTheTypesWhenThereIsOneEachWay() {
-        final String expectedIncoming = "inc";
-        final String expectedOutgoing = "out";
+        final String expectedIncoming = "INCOMING";
+        final String expectedOutgoing = "OUTGOING";
 
         // In a try-block, to make sure we close the session after the test
         try(Session session = driver.session()) {
@@ -60,11 +60,11 @@ public class GetRelationshipTypesTests {
             session.run(String.format("CREATE (:Person)-[:%s]->(:Movie {id:1})-[:%s]->(:Person)", expectedIncoming, expectedOutgoing));
 
             //Execute our procedure against it.
-            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD out, inc RETURN out, inc").single();
+            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD outgoing, incoming RETURN outgoing, incoming").single();
 
-            //Get the inc / out relationships from the result
-            assertThat(record.get("inc").asList(Value::asString)).containsOnly(expectedIncoming);
-            assertThat(record.get("out").asList(Value::asString)).containsOnly(expectedOutgoing);
+            //Get the incoming / outgoing relationships from the result
+            assertThat(record.get("incoming").asList(Value::asString)).containsOnly(expectedIncoming);
+            assertThat(record.get("outgoing").asList(Value::asString)).containsOnly(expectedOutgoing);
         }
     }
 
@@ -73,26 +73,26 @@ public class GetRelationshipTypesTests {
      */
     @Test
     public void shouldReturnDistinctTypes() {
-        final String expectedIncoming = "inc";
-        final String expectedOutgoing = "out";
+        final String expectedIncoming = "INCOMING";
+        final String expectedOutgoing = "OUTGOING";
 
         try(Session session = driver.session()) {
             session.run(String.format("CREATE (:Person)-[:%s]->(:Movie {id:1})<-[:%s]-(:Person)", expectedIncoming, expectedIncoming));
             session.run(String.format("MATCH (m:Movie {id:1}) CREATE (:Person)<-[:%s]-(m)-[:%s]->(:Person)", expectedOutgoing, expectedOutgoing));
 
-            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD out, inc RETURN out, inc").single();
+            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD outgoing, incoming RETURN outgoing, incoming").single();
 
-            assertThat(record.get("inc").asList(Value::asString)).containsOnly(expectedIncoming);
-            assertThat(record.get("out").asList(Value::asString)).containsOnly(expectedOutgoing);
+            assertThat(record.get("incoming").asList(Value::asString)).containsOnly(expectedIncoming);
+            assertThat(record.get("outgoing").asList(Value::asString)).containsOnly(expectedOutgoing);
         }
     }
 
     /**
-     * We should check that if there are no out relationships, the procedure still works.
+     * We should check that if there are no outgoing relationships, the procedure still works.
      */
     @Test
     public void shouldReturnIncomingIfThereAreNoOutgoingTypes() {
-        final String expectedIncoming = "inc";
+        final String expectedIncoming = "INCOMING";
 
         // In a try-block, to make sure we close the session after the test
         try(Session session = driver.session()) {
@@ -101,11 +101,11 @@ public class GetRelationshipTypesTests {
             session.run(String.format("CREATE (:Person)-[:%s]->(:Movie {id:1})", expectedIncoming));
 
             //Execute our procedure against it.
-            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD out, inc RETURN out, inc").single();
+            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD outgoing, incoming RETURN outgoing, incoming").single();
 
-            //Get the inc / out relationships from the result
-            assertThat(record.get("inc").asList(Value::asString)).containsOnly(expectedIncoming);
-            assertThat(record.get("out").asList(Value::asString)).isEmpty();
+            //Get the incoming / outgoing relationships from the result
+            assertThat(record.get("incoming").asList(Value::asString)).containsOnly(expectedIncoming);
+            assertThat(record.get("outgoing").asList(Value::asString)).isEmpty();
         }
     }
 
@@ -121,20 +121,20 @@ public class GetRelationshipTypesTests {
             session.run("CREATE (:Movie {id:1})");
 
             //Execute our procedure against it.
-            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD out, inc RETURN out, inc").single();
+            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD outgoing, incoming RETURN outgoing, incoming").single();
 
-            //Get the inc / out relationships from the result
-            assertThat(record.get("inc").asList(Value::asString)).isEmpty();
-            assertThat(record.get("out").asList(Value::asString)).isEmpty();
+            //Get the incoming / outgoing relationships from the result
+            assertThat(record.get("incoming").asList(Value::asString)).isEmpty();
+            assertThat(record.get("outgoing").asList(Value::asString)).isEmpty();
         }
     }
 
     /**
-     * We should check that if there are no inc relationships, the procedure still works.
+     * We should check that if there are no incoming relationships, the procedure still works.
      */
     @Test
     public void shouldReturnOutgoingIfThereAreNoIncoming() {
-        final String expectedOutgoing = "out";
+        final String expectedOutgoing = "OUTGOING";
 
         // In a try-block, to make sure we close the session after the test
         try(Session session = driver.session()) {
@@ -143,10 +143,11 @@ public class GetRelationshipTypesTests {
             session.run(String.format("CREATE (:Movie {id:1})-[:%s]->(:Person)", expectedOutgoing));
 
             //Execute our procedure against it.
-            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD out, inc RETURN out, inc").single();
-            //Get the inc / out relationships from the result
-            assertThat(record.get("inc").asList(Value::asString)).isEmpty();
-            assertThat(record.get("out").asList(Value::asString)).containsOnly(expectedOutgoing);
+            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD outgoing, incoming RETURN outgoing, incoming").single();
+
+            //Get the incoming / outgoing relationships from the result
+            assertThat(record.get("incoming").asList(Value::asString)).isEmpty();
+            assertThat(record.get("outgoing").asList(Value::asString)).containsOnly(expectedOutgoing);
         }
     }
 
@@ -156,7 +157,7 @@ public class GetRelationshipTypesTests {
     @Test
     public void shouldReturnEmptyStreamIfInputNodeIsNull(){
         try(Session session = driver.session()) {
-            Result result = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD out, inc RETURN out, inc");
+            Result result = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD outgoing, incoming RETURN outgoing, incoming");
             assertThat(result.hasNext()).isFalse();
         }
     }
@@ -179,10 +180,10 @@ public class GetRelationshipTypesTests {
             session.run(String.format("MATCH (m:Movie {id:1}) CREATE (:Person)<-[:%s]-(m)-[:%s]->(:Person)", expectedOutgoing_1, expectedOutgoing_2));
 
             //Execute our procedure against it.
-            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD out, inc RETURN out, inc").single();
+            Record record = session.run("MATCH (u:Movie {id:1}) CALL example.getRelationshipTypes(u) YIELD outgoing, incoming RETURN outgoing, incoming").single();
 
-            assertThat(record.get("inc").asList(Value::asString)).containsOnly(expectedIncoming_1, expectedIncoming_2);
-            assertThat(record.get("out").asList(Value::asString)).containsOnly(expectedOutgoing_1, expectedOutgoing_2);
+            assertThat(record.get("incoming").asList(Value::asString)).containsOnly(expectedIncoming_1, expectedIncoming_2);
+            assertThat(record.get("outgoing").asList(Value::asString)).containsOnly(expectedOutgoing_1, expectedOutgoing_2);
         }
     }
 }
