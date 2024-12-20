@@ -6,9 +6,7 @@ import org.neo4j.procedure.Description;
 import org.neo4j.procedure.Name;
 import org.neo4j.procedure.UserFunction;
 
-/**
- * This is an example how you can create a simple user-defined function for Neo4j.
- */
+
 public class Join {
 
     @UserFunction
