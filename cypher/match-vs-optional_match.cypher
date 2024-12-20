@@ -138,6 +138,7 @@ CREATE
       CREATE (d)-[:OWES {dollars: 30}]->(b)
       CREATE (:Counter {count: 0})
 
+
 2.
     UNWIND [0, 1, 2] AS x
     CALL {

@@ -45,14 +45,6 @@ public class GetRelationshipTypes {
         return Stream.of(new RelationshipTypes(incoming, outgoing));
     }
 
-    @Description(" mettez le texte que vous voulez")
-    public Stream<String> manageIndex() {
-
-        // TODO : creer des index si ça n'existe pas sur certains champs de votre choix dans ne base de votre choix.
-
-
-        return Stream.empty();
-    }
     /**
      * Adds the distinct type of a relationship to the given List<String>
      *
