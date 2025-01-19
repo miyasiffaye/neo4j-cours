@@ -1,0 +1,26 @@
+.\neo4j-admin.bat database load --from-path=file:///D:/neo4j-cours/data/ recommendations-50 --overwrite-destination=true --verbose
+
+MATCH (n1)-[r]->(n2)   with  collect(distinct n1) + collect(distinct n2)  AS importNodes , collect(r) as importRels
+CALL apoc.export.cypher.data(importNodes, importRels,  "file:///D:/neo4j-cours/data/test.cypher",  { format: "plain", cypherFormat: "create" })
+YIELD file, batches, source, format, nodes, relationships, properties, time, rows, batchSize
+RETURN file, batches, source, format, nodes, relationships, properties, time, rows, batchSize;
+//
+CALL apoc.export.cypher.all("file:///D:/neo4j-cours/data/all-plain.cypher", {
+    format: "plain",
+    useOptimizations: {type: "UNWIND_BATCH", unwindBatchSize: 20}
+})
+YIELD file, batches, source, format, nodes, relationships, properties, time, rows, batchSize
+RETURN file, batches, source, format, nodes, relationships, properties, time, rows, batchSize;
+
+// default config populated for illustration
+CALL apoc.export.cypher.all("file:///D:/neo4j-cours/data/all.cypher", {
+    format: "cypher-shell",
+    useOptimizations: {type: "UNWIND_BATCH", unwindBatchSize: 20}
+})
+YIELD file, batches, source, format, nodes, relationships, properties, time, rows, batchSize
+RETURN file, batches, source, format, nodes, relationships, properties, time, rows, batchSize;
+
+CALL apoc.cypher.runFile('file:///D:/neo4j-cours/data/test.cypher', {statistics: true});
+CALL apoc.cypher.runFile('file:///D:/neo4j-cours/data/all-plain.cypher', {statistics: true});
+
+

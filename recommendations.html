@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.22">
+<title>Recommendations</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.square{list-style-type:square}
+ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<style>
+/*! Asciidoctor Tabs | Copyright (c) 2018-present Dan Allen | MIT License */
+.tabs {
+    margin-bottom: 1.25em;
+}
+
+.tablist > ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tablist > ul li {
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 0.25em 1em;
+    position: relative;
+}
+
+.tablist > ul li:focus-visible {
+    outline: none;
+}
+
+.tablist.ulist,
+.tablist.ulist > ul li {
+    margin: 0;
+}
+
+.tablist.ulist > ul li + li {
+    margin-left: 0.25em;
+}
+
+.tabs .tablist li::after {
+    content: "";
+    display: block;
+    height: 1px;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+}
+
+.tabs.is-loading .tablist li:not(:first-child),
+.tabs:not(.is-loading) .tablist li:not(.is-selected) {
+    background-color: #f5f5f5;
+}
+
+.tabs.is-loading .tablist li:first-child::after,
+.tabs:not(.is-loading) .tablist li.is-selected::after {
+    background-color: #fff;
+}
+
+/*
+.tabs:not(.is-loading) .tablist li,
+.tabs:not(.is-loading) .tablist li::after {
+  transition: background-color 200ms ease-in-out;
+}
+*/
+
+.tablist > ul p {
+    line-height: inherit;
+    margin: 0;
+}
+
+.tabpanel {
+    background-color: #fff;
+    padding: 1.25em;
+}
+
+.tablist > ul li,
+.tabpanel {
+    border: 1px solid #dcdcdc;
+}
+
+.tablist > ul li {
+    border-bottom: 0;
+}
+
+.tabs.is-loading .tabpanel + .tabpanel,
+.tabs:not(.is-loading) .tabpanel.is-hidden {
+    display: none;
+}
+
+.tabpanel > :first-child {
+    margin-top: 0;
+}
+
+/* #content is a signature of the Asciidoctor standalone HTML output */
+#content .tabpanel > :last-child,
+#content .tabpanel > :last-child > :last-child,
+#content .tabpanel > :last-child > :last-child > li:last-child > :last-child {
+    margin-bottom: 0;
+}
+
+.tablecontainer {
+    overflow-x: auto;
+}
+
+#content .tablecontainer {
+    margin-bottom: 1.25em;
+}
+
+#content .tablecontainer > table.tableblock {
+    margin-bottom: 0;
+}
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>Recommendations</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<style type="text/css">
+* {
+  margin-bottom: 0.5em;
+}
+</style>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_personalized_product_recommendations_with_neo4j">Personalized Product Recommendations with Neo4j</h2>
+<div class="sectionbody">
+<div class="imageblock right">
+<div class="content">
+<img src="./img/openmoviegraph.png" alt="openmoviegraph">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_recommendations">Recommendations</h3>
+<div class="paragraph">
+<p>Personalized product recommendations can increase conversions, improve sales rates and provide a better experice for users. In this Neo4j Browser guide, we&#8217;ll take a look at how you can generate graph-based real-time personalized product recommendations using a dataset of movies and movie ratings, but these techniques can be applied to many different types of products or content.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_graph_based_recommendations">Graph-Based Recommendations</h3>
+<div class="paragraph">
+<p>Generating <strong>personalized recommendations</strong> is one of the most common use cases for a graph database. Some of the main benefits of using graphs to generate recommendations include:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Performance</strong>. Index-free adjacency allows for <strong>calculating recommendations in real time</strong>, ensuring the recommendation is always relevant and reflecting up-to-date information.</p>
+</li>
+<li>
+<p><strong>Data model</strong>. The labeled property graph model allows for easily combining datasets from multiple sources, allowing enterprises to <strong>unlock value from previously separated data silos.</strong></p>
+</li>
+</ol>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./img/title1.png" alt="title1" width="100%">
+</div>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Data sources:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.omdbapi.com/">Open Movie Database</a></p>
+</li>
+<li>
+<p><a href="https://grouplens.org/datasets/movielens/">MovieLens</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_open_movie_graph_data_model">The Open Movie Graph Data Model</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_the_property_graph_model">The Property Graph Model</h3>
+<div class="paragraph">
+<p>The data model of graph databases is called the labeled property graph model.</p>
+</div>
+<div class="paragraph">
+<p><strong>Nodes</strong>: The entities in the data.</p>
+</div>
+<div class="paragraph">
+<p><strong>Labels</strong>: Each node can have one or more <strong>label</strong> that specifies the type of the node.</p>
+</div>
+<div class="paragraph">
+<p><strong>Relationships</strong>: Connect two nodes. They have a single direction and type.</p>
+</div>
+<div class="paragraph">
+<p><strong>Properties</strong>: Key-value pair properties can be stored on both nodes and relationships.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_eliminate_data_silos">Eliminate Data Silos</h3>
+<div class="paragraph">
+<p>In this use case, we are using graphs to combine data from multiple sources.</p>
+</div>
+<div class="paragraph">
+<p><strong>Product Catalog</strong>: Data describing movies comes from the product catalog silo.</p>
+</div>
+<div class="paragraph">
+<p><strong>User Purchases / Reviews</strong>: Data on user purchases and reviews comes from the user or transaction source.</p>
+</div>
+<div class="paragraph">
+<p>By combining these two in the graph, we are able to query across datasets to generate personalized product recommendations.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./img/datamodel.png" alt="datamodel" width="100%">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_nodes">Nodes</h3>
+<div class="paragraph">
+<p><code>Movie</code>, <code>Actor</code>, <code>Director</code>, <code>User</code>, <code>Genre</code> are the labels used in this example.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_relationships">Relationships</h3>
+<div class="paragraph">
+<p><code>ACTED_IN</code>, <code>IN_GENRE</code>, <code>DIRECTED</code>, <code>RATED</code> are the relationships used in this example.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_properties">Properties</h3>
+<div class="paragraph">
+<p><code>title</code>, <code>name</code>, <code>year</code>, <code>rating</code> are some of the properties used in this example.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_intro_to_cypher">Intro To Cypher</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to work with our labeled property graph, we need a query language for graphs.</p>
+</div>
+<div class="sect2">
+<h3 id="_graph_patterns">Graph Patterns</h3>
+<div class="paragraph">
+<p>Cypher is the query language for graphs and is centered around <strong>graph patterns</strong>. Graph patterns are expressed in Cypher using ASCII-art like syntax.</p>
+</div>
+<div class="paragraph">
+<p><strong>Nodes</strong></p>
+</div>
+<div class="paragraph">
+<p>Nodes are defined within parentheses <code>()</code>. Optionally, we can specify node label(s): <code>(:Movie)</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Relationships</strong></p>
+</div>
+<div class="paragraph">
+<p>Relationships are defined within square brackets <code>[]</code>. Optionally we can specify type and direction:</p>
+</div>
+<div class="paragraph">
+<p><code>(:Movie)<strong><-[:RATED]-</strong>(:User)</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Variables</strong></p>
+</div>
+<div class="paragraph">
+<p>Graph elements can be bound to variables that can be referred to later in the query:</p>
+</div>
+<div class="paragraph">
+<p><code>(<strong>m</strong>:Movie)<-[<strong>r</strong>:RATED]-(<strong>u</strong>:User)</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_predicates">Predicates</h3>
+<div class="paragraph">
+<p>Filters can be applied to these graph patterns to limit the matching paths. Boolean logic operators, regular expressions and string comparison operators can be used here within the <code>WHERE</code> clause, e.g. <code>WHERE m.title CONTAINS 'Matrix'</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_aggregations">Aggregations</h3>
+<div class="paragraph">
+<p>There is an implicit group of all non-aggregated fields when using aggregation functions such as <code>count</code>.</p>
+</div>
+<div class="paragraph">
+<p>Take the <a href="https://graphacademy.neo4j.com/courses/cypher-fundamentals/" target="_blank" rel="noopener">Cypher Graphacademy courses</a> to learn more.
+Use the <a href="https://neo4j.com/docs/cypher-refcard/current/?ref=browser-guide" target="_blank" rel="noopener">Cypher Refcard</a> as a syntax reference.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dissecting_a_cypher_statement">Dissecting a Cypher Statement</h3>
+<div class="paragraph">
+<p>Let&#8217;s look at a Cypher query that answers the question "How many reviews does each Matrix movie have?". Don&#8217;t worry if this seems complex, we&#8217;ll build up our understanding of Cypher as we move along.</p>
+</div>
+<div class="listingblock">
+<div class="title">How many reviews does each Matrix movie have? Click on the block to put the query in the top-most window on the query editor. Hit the triangular <span class="icon">[play circle&#93;</span> button or press <span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span> to run it and see the resulting visualization.</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (m:Movie)&lt;-[:RATED]-(u:User)
+WHERE m.title CONTAINS 'Matrix'
+WITH m, count(*) AS reviews
+RETURN m.title AS movie, reviews
+ORDER BY reviews DESC LIMIT 5;</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MATCH (m:Movie)&lt;-[:RATED]-(u:User)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Search for an existing graph pattern</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WHERE m.title CONTAINS "Matrix"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter matching paths to only those matching a predicate</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">aggregate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WITH m, count(*) AS reviews</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Count number of paths matched for each movie</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">return</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RETURN m.title as movie, reviews</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specify columns to be returned by the statement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">order</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ORDER BY reviews DESC</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Order by number of reviews, in descending order</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">limit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LIMIT 5;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only return first five records</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_personalized_recommendations">Personalized Recommendations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now let&#8217;s start generating some recommendations. There are two basic approaches to recommendation algorithms.</p>
+</div>
+<div class="sect2">
+<h3 id="_content_based_filtering">Content-Based Filtering</h3>
+<div class="paragraph">
+<p>Recommend items that are similar to those that a user is viewing, rated highly or purchased previously.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./img/content1.png" alt="content1">
+</div>
+</div>
+<div class="listingblock">
+<div class="title">"Items similar to the item you&#8217;re looking at now"</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH p=(m:Movie {title: 'Net, The'})
+       -[:ACTED_IN|IN_GENRE|DIRECTED*2]-()
+RETURN p LIMIT 25</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_collaborative_filtering">Collaborative Filtering</h3>
+<div class="paragraph">
+<p>Use the preferences, ratings and actions of other users in the network to find items to recommend.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./img/cf1.png" alt="cf1">
+</div>
+</div>
+<div class="listingblock">
+<div class="title">"Users who got this item, also got that other item."</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (m:Movie {title: 'Crimson Tide'})<-[:RATED]-
+      (u:User)-[:RATED]->(rec:Movie)
+WITH rec, COUNT(*) AS usersWhoAlsoWatched
+ORDER BY usersWhoAlsoWatched DESC LIMIT 25
+RETURN rec.title AS recommendation, usersWhoAlsoWatched</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_content_based_filtering_2">Content-Based Filtering</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The goal of content-based filtering is to find similar items, using attributes (or traits) of the item. Using our movie data, one way we could define similarlity is movies that have common genres.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./img/genres.png" alt="genres" width="100%">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_similarity_based_on_common_genres">Similarity Based on Common Genres</h3>
+<div class="listingblock">
+<div class="title">Find movies most similar to Inception based on shared genres</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// Find similar movies by common genres
+MATCH (m:Movie)-[:IN_GENRE]-&gt;(g:Genre)
+              &lt;-[:IN_GENRE]-(rec:Movie)
+WHERE m.title = 'Inception'
+WITH rec, collect(g.name) AS genres, count(*) AS commonGenres
+RETURN rec.title, genres, commonGenres
+ORDER BY commonGenres DESC LIMIT 10;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_personalized_recommendations_based_on_genres">Personalized Recommendations Based on Genres</h3>
+<div class="paragraph">
+<p>If we know what movies a user has watched, we can use this information to recommend similar movies:</p>
+</div>
+<div class="listingblock">
+<div class="title">Recommend movies similar to those the user has already watched</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// Content recommendation by overlapping genres
+MATCH (u:User {name: 'Angelica Rodriguez'})-[r:RATED]-&gt;(m:Movie),
+      (m)-[:IN_GENRE]-&gt;(g:Genre)&lt;-[:IN_GENRE]-(rec:Movie)
+WHERE NOT EXISTS{ (u)-[:RATED]-&gt;(rec) }
+WITH rec, g.name as genre, count(*) AS count
+WITH rec, collect([genre, count]) AS scoreComponents
+RETURN rec.title AS recommendation, rec.year AS year, scoreComponents,
+       reduce(s=0,x in scoreComponents | s+x[1]) AS score
+ORDER BY score DESC LIMIT 10</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_weighted_content_algorithm">Weighted Content Algorithm</h3>
+<div class="paragraph">
+<p>Of course there are many more traits in addition to just genre that we can consider to compute similarity, such as actors and directors.
+Let&#8217;s use a weighted sum to score the recommendations based on the number of actors (3x), genres (5x) and directors (4x) they have in common to boost the score:</p>
+</div>
+<div class="listingblock">
+<div class="title">Compute a weighted sum based on the number and types of overlapping traits</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// Find similar movies by common genres
+MATCH (m:Movie) WHERE m.title = 'Wizard of Oz, The'
+MATCH (m)-[:IN_GENRE]->(g:Genre)<-[:IN_GENRE]-(rec:Movie)
+
+WITH m, rec, count(*) AS gs
+
+OPTIONAL MATCH (m)<-[:ACTED_IN]-(a)-[:ACTED_IN]->(rec)
+WITH m, rec, gs, count(a) AS as
+
+OPTIONAL MATCH (m)<-[:DIRECTED]-(d)-[:DIRECTED]->(rec)
+WITH m, rec, gs, as, count(d) AS ds
+
+RETURN rec.title AS recommendation,
+       (5*gs)+(3*as)+(4*ds) AS score
+ORDER BY score DESC LIMIT 25</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_content_based_similarity_metrics">Content-Based Similarity Metrics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>So far we&#8217;ve used the number of common traits as a way to score the relevance of our recommendations.
+Let&#8217;s now consider a more robust way to quantify similarity, using a similarity metric.
+Similarity metrics are an important component used in generating personalized recommendations that allow us to quantify how similar two items (or as we&#8217;ll see later, how similar two users preferences) are.</p>
+</div>
+<div class="sect2">
+<h3 id="_jaccard_index">Jaccard Index</h3>
+<div class="paragraph">
+<p>The Jaccard index is a number between 0 and 1 that indicates how similar two sets are.
+The Jaccard index of two identical sets is 1.
+If two sets do not have a common element, then the Jaccard index is 0.
+The Jaccard is calculated by dividing the size of the intersection of two sets by the union of the two sets.</p>
+</div>
+<div class="paragraph">
+<p>We can calculate the Jaccard index for sets of movie genres to determine how similar two movies are.</p>
+</div>
+<div class="listingblock">
+<div class="title">What movies are most similar to Inception based on Jaccard similarity of genres?</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (m:Movie {title:'Inception'})-[:IN_GENRE]-&gt;
+      (g:Genre)&lt;-[:IN_GENRE]-(other:Movie)
+WITH m, other, count(g) AS intersection, collect(g.name) as common
+
+WITH m,other, intersection, common,
+     [(m)-[:IN_GENRE]-&gt;(mg) | mg.name] AS set1,
+     [(other)-[:IN_GENRE]-&gt;(og) | og.name] AS set2
+
+WITH m,other,intersection, common, set1, set2,
+     set1+[x IN set2 WHERE NOT x IN set1] AS union
+
+RETURN m.title, other.title, common, set1,set2,
+       ((1.0*intersection)/size(union)) AS jaccard
+
+ORDER BY jaccard DESC LIMIT 25</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can apply this same approach to all "traits" of the movie (genre, actors, directors, etc.):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (m:Movie {title: 'Inception'})-[:IN_GENRE|ACTED_IN|DIRECTED]-
+                   (t)<-[:IN_GENRE|ACTED_IN|DIRECTED]-(other:Movie)
+WITH m, other, count(t) AS intersection, collect(t.name) AS common,
+     [(m)-[:IN_GENRE|ACTED_IN|DIRECTED]-(mt) | mt.name] AS set1,
+     [(other)-[:IN_GENRE|ACTED_IN|DIRECTED]-(ot) | ot.name] AS set2
+
+WITH m,other,intersection, common, set1, set2,
+     set1 + [x IN set2 WHERE NOT x IN set1] AS union
+
+RETURN m.title, other.title, common, set1,set2,
+       ((1.0*intersection)/size(union)) AS jaccard
+ORDER BY jaccard DESC LIMIT 25</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_collaborative_filtering_leveraging_movie_ratings">Collaborative Filtering – Leveraging Movie Ratings</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="./img/cf2.png" alt="cf2" width="100%">
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that we have user-movie ratings in our graph.
+The collaborative filtering approach is going to make use of this information to find relevant recommendations.</p>
+</div>
+<div class="paragraph">
+<p>Steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Find similar users in the network (our peer group).</p>
+</li>
+<li>
+<p>Assuming that similar users have similar preferences, what are the movies those similar users like?</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">Show all ratings by Misty Williams</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// Show all ratings by Misty Williams
+MATCH (u:User {name: 'Misty Williams'})
+MATCH (u)-[r:RATED]-&gt;(m:Movie)
+RETURN *
+LIMIT 100;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Find Misty&#8217;s average rating</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// Show average ratings by Misty Williams
+MATCH (u:User {name: 'Misty Williams'})
+MATCH (u)-[r:RATED]-&gt;(m:Movie)
+RETURN avg(r.rating) AS average;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">What are the movies that Misty liked more than average?</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// What are the movies that Misty liked more than average?
+MATCH (u:User {name: 'Misty Williams'})
+MATCH (u)-[r:RATED]-&gt;(m:Movie)
+WITH u, avg(r.rating) AS average
+MATCH (u)-[r:RATED]-&gt;(m:Movie)
+WHERE r.rating &gt; average
+RETURN *
+LIMIT 100;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_collaborative_filtering_the_wisdom_of_crowds">Collaborative Filtering – The Wisdom of Crowds</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_simple_collaborative_filtering">Simple Collaborative Filtering</h3>
+<div class="paragraph">
+<p>Here we just use the fact that someone has rated a movie, not their actual rating to demonstrate the structure of finding the peers.
+Then we look at what else the peers rated, that the user has not rated themselves yet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (u:User {name: 'Cynthia Freeman'})-[:RATED]->
+      (:Movie)<-[:RATED]-(peer:User)
+MATCH (peer)-[:RATED]->(rec:Movie)
+WHERE NOT EXISTS { (u)-[:RATED]->(rec) }
+RETURN rec.title, rec.year, rec.plot
+LIMIT 25</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course this is just a simple appraoch, there are many problems with this query, such as not normalizing based on popularity or not taking ratings into consideration.
+We&#8217;ll do that next, looking at movies being rated similarly, and then picking highly rated movies and using their rating and frequency to sort the results.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (u:User {name: 'Cynthia Freeman'})-[r1:RATED]->
+      (:Movie)<-[r2:RATED]-(peer:User)
+WHERE abs(r1.rating-r2.rating) < 2 // similarly rated
+WITH distinct u, peer
+MATCH (peer)-[r3:RATED]->(rec:Movie)
+WHERE r3.rating > 3
+  AND NOT EXISTS { (u)-[:RATED]->(rec) }
+WITH rec, count(*) as freq, avg(r3.rating) as rating
+RETURN rec.title, rec.year, rating, freq, rec.plot
+ORDER BY rating DESC, freq DESC
+LIMIT 25</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the next section, we will see how we can improve this approach using the <strong>kNN method</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_only_consider_genres_liked_by_the_user">Only Consider Genres Liked by the User</h3>
+<div class="paragraph">
+<p>Many recommender systems are a blend of collaborative filtering and content-based approaches:</p>
+</div>
+<div class="listingblock">
+<div class="title">For a particular user, what genres have a higher-than-average rating? Use this to score similar movies</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// compute mean rating
+MATCH (u:User {name: 'Andrew Freeman'})-[r:RATED]->(m:Movie)
+WITH u, avg(r.rating) AS mean
+
+// find genres with higher than average rating and their number of rated movies
+MATCH (u)-[r:RATED]->(m:Movie)
+       -[:IN_GENRE]->(g:Genre)
+WHERE r.rating > mean
+
+WITH u, g, count(*) AS score
+
+// find movies in those genres, that have not been watched yet
+MATCH (g)<-[:IN_GENRE]-(rec:Movie)
+WHERE NOT EXISTS { (u)-[:RATED]->(rec) }
+
+// order by sum of scores
+RETURN rec.title AS recommendation, rec.year AS year,
+       sum(score) AS sscore,
+       collect(DISTINCT g.name) AS genres
+ORDER BY sscore DESC LIMIT 10</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_collaborative_filtering_similarity_metrics">Collaborative Filtering – Similarity Metrics</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We use similarity metrics to quantify how similar two users or two items are.
+We&#8217;ve already seen Jaccard similarity used in the context of content-based filtering.
+Now, we&#8217;ll see how similarity metrics are used with collaborative filtering.</p>
+</div>
+<div class="sect2">
+<h3 id="_cosine_distance">Cosine Distance</h3>
+<div class="paragraph">
+<p>Jaccard similarity was useful for comparing movies and is essentially comparing two sets (groups of genres, actors, directors, etc.).
+However, with movie ratings each relationship has a <strong>weight</strong> that we can consider as well.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cosine_similarity">Cosine Similarity</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./img/cosine.png" alt="cosine" width="400px">
+</div>
+</div>
+<div class="paragraph">
+<p>The cosine similarity of two users will tell us how similar two users' preferences for movies are.
+Users with a high cosine similarity will have similar preferences.</p>
+</div>
+<div class="listingblock">
+<div class="title">Find the users with the most similar preferences to Cynthia Freeman, according to cosine similarity</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">// Most similar users using Cosine similarity
+MATCH (p1:User {name: "Cynthia Freeman"})-[x:RATED]->
+      (m:Movie)<-[y:RATED]-(p2:User)
+WITH p1, p2, count(m) AS numbermovies,
+     sum(x.rating * y.rating) AS xyDotProduct,
+     collect(x.rating) as xRatings, collect(y.rating) as yRatings
+WHERE numbermovies > 10
+WITH p1, p2, xyDotProduct,
+sqrt(reduce(xDot = 0.0, a IN xRatings | xDot + a^2)) AS xLength,
+sqrt(reduce(yDot = 0.0, b IN yRatings | yDot + b^2)) AS yLength
+RETURN p1.name, p2.name, xyDotProduct / (xLength * yLength) AS sim
+ORDER BY sim DESC
+LIMIT 100;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can also compute this measure using the <a href="https://neo4j.com/docs/graph-data-science/current/alpha-algorithms/cosine/" target="_blank" rel="noopener">Cosine Similarity algorithm</a> in the Neo4j Graph Data Science Library.</p>
+</div>
+<div class="listingblock">
+<div class="title">Find the users with the most similar preferences to Cynthia Freeman, according to cosine similarity function</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (p1:User {name: 'Cynthia Freeman'})-[x:RATED]-&gt;(movie)&lt;-[x2:RATED]-(p2:User)
+WHERE p2 &lt;&gt; p1
+WITH p1, p2, collect(x.rating) AS p1Ratings, collect(x2.rating) AS p2Ratings
+WHERE size(p1Ratings) &gt; 10
+RETURN p1.name AS from,
+       p2.name AS to,
+       gds.similarity.cosine(p1Ratings, p2Ratings) AS similarity
+ORDER BY similarity DESC</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_collaborative_filtering_similarity_metrics_2">Collaborative Filtering – Similarity Metrics</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_pearson_similarity">Pearson Similarity</h3>
+<div class="paragraph">
+<p>Pearson similarity, or Pearson correlation, is another similarity metric we can use.
+This is particularly well-suited for product recommendations because it takes into account the fact that different users will have different <strong>mean ratings</strong>: on average some users will tend to give higher ratings than others.
+Since Pearson similarity considers differences about the mean, this metric will account for these discrepancies.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./img/pearson.png" alt="pearson" width="400px">
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Find users most similar to Cynthia Freeman, according to Pearson similarity</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (u1:User {name:&quot;Cynthia Freeman&quot;})-[r:RATED]-&gt;(m:Movie)
+WITH u1, avg(r.rating) AS u1_mean
+
+MATCH (u1)-[r1:RATED]-&gt;(m:Movie)&lt;-[r2:RATED]-(u2)
+WITH u1, u1_mean, u2, collect({r1: r1, r2: r2}) AS ratings
+WHERE size(ratings) &gt; 10
+
+MATCH (u2)-[r:RATED]-&gt;(m:Movie)
+WITH u1, u1_mean, u2, avg(r.rating) AS u2_mean, ratings
+
+UNWIND ratings AS r
+
+WITH sum( (r.r1.rating-u1_mean) * (r.r2.rating-u2_mean) ) AS nom,
+     sqrt( sum( (r.r1.rating - u1_mean)^2) * sum( (r.r2.rating - u2_mean) ^2)) AS denom,
+     u1, u2 WHERE denom &lt;&gt; 0
+
+RETURN u1.name, u2.name, nom/denom AS pearson
+ORDER BY pearson DESC LIMIT 100</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can also compute this measure using the <a href="https://neo4j.com/docs/graph-data-science/current/alpha-algorithms/pearson/" target="_blank" rel="noopener">Pearson Similarity algorithm</a> in the Neo4j Graph Data Science Library.</p>
+</div>
+<div class="listingblock">
+<div class="title">Find users most similar to Cynthia Freeman, according to the Pearson similarity function</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (p1:User {name: 'Cynthia Freeman'})-[x:RATED]-&gt;(movie)&lt;-[x2:RATED]-(p2:User)
+WHERE p2 &lt;&gt; p1
+WITH p1, p2, collect(x.rating) AS p1Ratings, collect(x2.rating) AS p2Ratings
+WHERE size(p1Ratings) &gt; 10
+RETURN p1.name AS from,
+       p2.name AS to,
+       gds.similarity.pearson(p1Ratings, p2Ratings) AS similarity
+ORDER BY similarity DESC</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_collaborative_filtering_neighborhood_based_recommendations">Collaborative Filtering – Neighborhood-Based Recommendations</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_knn_k_nearest_neighbors">kNN – K-Nearest Neighbors</h3>
+<div class="paragraph">
+<p>Now that we have a method for finding similar users based on preferences, the next step is to allow each of the <strong>k</strong> most similar users to vote for what items should be recommended.</p>
+</div>
+<div class="paragraph">
+<p>Essentially:</p>
+</div>
+<div class="paragraph">
+<p>"Who are the 10 users with tastes in movies most similar to mine? What movies have they rated highly that I haven&#8217;t seen yet?"</p>
+</div>
+<div class="listingblock">
+<div class="title">kNN movie recommendation using Pearson similarity</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cypher">MATCH (u1:User {name:"Cynthia Freeman"})-[r:RATED]->(m:Movie)
+WITH u1, avg(r.rating) AS u1_mean
+
+MATCH (u1)-[r1:RATED]->(m:Movie)<-[r2:RATED]-(u2)
+WITH u1, u1_mean, u2, COLLECT({r1: r1, r2: r2}) AS ratings WHERE size(ratings) > 10
+
+MATCH (u2)-[r:RATED]->(m:Movie)
+WITH u1, u1_mean, u2, avg(r.rating) AS u2_mean, ratings
+
+UNWIND ratings AS r
+
+WITH sum( (r.r1.rating-u1_mean) * (r.r2.rating-u2_mean) ) AS nom,
+     sqrt( sum( (r.r1.rating - u1_mean)^2) * sum( (r.r2.rating - u2_mean) ^2)) AS denom,
+     u1, u2 WHERE denom <> 0
+
+WITH u1, u2, nom/denom AS pearson
+ORDER BY pearson DESC LIMIT 10
+
+MATCH (u2)-[r:RATED]->(m:Movie) WHERE NOT EXISTS( (u1)-[:RATED]->(m) )
+
+RETURN m.title, SUM( pearson * r.rating) AS score
+ORDER BY score DESC LIMIT 25</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_further_work">Further Work</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_resources">Resources</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Web <a href="https://neo4j.com/docs/cypher-refcard/current/?ref=browser-guide" target="_blank" rel="noopener">Cypher Refcard</a></p>
+</li>
+<li>
+<p>Web <a href="https://neo4j.com/docs/?ref=browser-guide" target="_blank" rel="noopener">Neo4j Documentation</a></p>
+</li>
+<li>
+<p>Blog Post <a href="https://neo4j.com/blog/collaborative-filtering-creating-teams/?ref=browser-guide" target="_blank" rel="noopener">Collaborative Filtering: Creating the Best Teams Ever</a></p>
+</li>
+<li>
+<p>Video <a href="https://www.youtube.com/watch?v=60E2WV4iwIg" target="_blank" rel="noopener">Data Science and Recommendations</a></p>
+</li>
+<li>
+<p>Web <a href="https://neo4j.com/use-cases/real-time-recommendation-engine/?ref=browser-guide" target="_blank" rel="noopener">Use-Case: Real-Time Recommendation Engines</a></p>
+</li>
+<li>
+<p>Article: <a href="https://neo4j.com/developer-blog/exploring-practical-recommendation-systems-in-neo4j/" target="_blank" rel="noopener">Exploring Practical Recommendation Systems In Neo4j</a></p>
+</li>
+<li>
+<p>Book (free download) <a href="https://neo4j.com/graph-data-science-for-dummies/" target="_blank" rel="noopener">Graph Data Science For Dummies</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercises">Exercises</h3>
+<div class="paragraph">
+<p>Extend these queries:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Temporal component</dt>
+<dd>
+<p>Preferences change over time, use the rating timestamp to consider how more recent ratings might be used to find more relevant recommendations.</p>
+</dd>
+<dt class="hdlist1">Keyword extraction</dt>
+<dd>
+<p>Enhance the traits available using the plot description.<br>
+How would you model extracted keywords for movies?</p>
+</dd>
+<dt class="hdlist1">Image recognition using posters</dt>
+<dd>
+<p>There are several libraries and APIs that offer image recognition and tagging.<br>
+Since we have movie poster images for each movie, how could we use these to enhance our recomendations?</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2023-01-12 08:26:56 +0100
+</div>
+</div>
+<script>
+;(function () { /*! Asciidoctor Tabs | Copyright (c) 2018-present Dan Allen | MIT License */
+  'use strict'
+
+  var config = (document.currentScript || {}).dataset || {}
+  var forEach = Array.prototype.forEach
+
+  init(document.querySelectorAll('.tabs'))
+
+  function init (tabsBlocks) {
+    if (!tabsBlocks.length) return
+    forEach.call(tabsBlocks, function (tabs) {
+      var syncIds = tabs.classList.contains('is-sync') ? {} : undefined
+      var tablist = tabs.querySelector('.tablist ul')
+      tablist.setAttribute('role', 'tablist')
+      var start
+      forEach.call(tablist.querySelectorAll('li'), function (tab, idx) {
+        tab.tabIndex = -1
+        tab.setAttribute('role', tab.classList.add('tab') || 'tab')
+        var id, anchor, syncId
+        if (!(id = tab.id) && (anchor = tab.querySelector('a[id]'))) {
+          id = tab.id = anchor.parentNode.removeChild(anchor).id
+        }
+        var panel = id && tabs.querySelector('.tabpanel[aria-labelledby~="' + id + '"]')
+        if (!panel) return idx ? undefined : toggleSelected(tab, true) // invalid state
+        syncIds && (((syncId = tab.textContent.trim()) in syncIds) ? (syncId = undefined) : true) &&
+        (syncIds[(tab.dataset.syncId = syncId)] = tab)
+        idx || (syncIds && (start = { tab: tab, panel: panel })) ? toggleHidden(panel, true) : toggleSelected(tab, true)
+        tab.setAttribute('aria-controls', panel.id)
+        panel.setAttribute('role', 'tabpanel')
+        var onClick = syncId === undefined ? activateTab : activateTabSync
+        tab.addEventListener('click', onClick.bind({ tabs: tabs, tab: tab, panel: panel }))
+      })
+      if (!tabs.closest('.tabpanel')) {
+        forEach.call(tabs.querySelectorAll('.tabpanel table.tableblock'), function (table) {
+          var container = Object.assign(document.createElement('div'), { className: 'tablecontainer' })
+          table.parentNode.insertBefore(container, table).appendChild(table)
+        })
+      }
+      if (start) {
+        var syncGroupId
+        for (var i = 0, lst = tabs.classList, len = lst.length, className; i !== len; i++) {
+          if (!(className = lst.item(i)).startsWith('data-sync-group-id=')) continue
+          tabs.dataset.syncGroupId = syncGroupId = lst.remove(className) || className.slice(19).replace(/\u00a0/g, ' ')
+          break
+        }
+        if (syncGroupId === undefined) tabs.dataset.syncGroupId = syncGroupId = Object.keys(syncIds).sort().join('|')
+        var preferredSyncId = 'syncStorageKey' in config &&
+          window[(config.syncStorageScope || 'local') + 'Storage'].getItem(config.syncStorageKey + '-' + syncGroupId)
+        var tab = preferredSyncId && syncIds[preferredSyncId]
+        tab && Object.assign(start, { tab: tab, panel: document.getElementById(tab.getAttribute('aria-controls')) })
+        toggleSelected(start.tab, true) || toggleHidden(start.panel, false)
+      }
+    })
+    onHashChange()
+    toggleClassOnEach(tabsBlocks, 'is-loading', 'remove')
+    window.setTimeout(toggleClassOnEach.bind(null, tabsBlocks, 'is-loaded', 'add'), 0)
+    window.addEventListener('hashchange', onHashChange)
+  }
+
+  function activateTab (e) {
+    var tab = this.tab
+    var tabs = this.tabs || (this.tabs = tab.closest('.tabs'))
+    var panel = this.panel || (this.panel = document.getElementById(tab.getAttribute('aria-controls')))
+    querySelectorWithSiblings(tabs, '.tablist .tab', 'tab').forEach(function (el) {
+      toggleSelected(el, el === tab)
+    })
+    querySelectorWithSiblings(tabs, '.tabpanel', 'tabpanel').forEach(function (el) {
+      toggleHidden(el, el !== panel)
+    })
+    if (!this.isSync && 'syncStorageKey' in config && 'syncGroupId' in tabs.dataset) {
+      var storageKey = config.syncStorageKey + '-' + tabs.dataset.syncGroupId
+      window[(config.syncStorageScope || 'local') + 'Storage'].setItem(storageKey, tab.dataset.syncId)
+    }
+    if (!e) return
+    var loc = window.location
+    var hashIdx = loc.hash ? loc.href.indexOf('#') : -1
+    if (~hashIdx) window.history.replaceState(null, '', loc.href.slice(0, hashIdx))
+    e.preventDefault()
+  }
+
+  function activateTabSync (e) {
+    activateTab.call(this, e)
+    var thisTabs = this.tabs
+    var thisTab = this.tab
+    var initialY = thisTabs.getBoundingClientRect().y
+    forEach.call(document.querySelectorAll('.tabs'), function (tabs) {
+      if (tabs === thisTabs || tabs.dataset.syncGroupId !== thisTabs.dataset.syncGroupId) return
+      querySelectorWithSiblings(tabs, '.tablist .tab', 'tab').forEach(function (tab) {
+        if (tab.dataset.syncId === thisTab.dataset.syncId) activateTab.call({ tabs: tabs, tab: tab, isSync: true })
+      })
+    })
+    var shiftedBy = thisTabs.getBoundingClientRect().y - initialY
+    if (shiftedBy && (shiftedBy = Math.round(shiftedBy))) window.scrollBy({ top: shiftedBy, behavior: 'instant' })
+  }
+
+  function querySelectorWithSiblings (scope, selector, siblingClass) {
+    var el = scope.querySelector(selector)
+    if (!el) return []
+    var result = [el]
+    while ((el = el.nextElementSibling) && el.classList.contains(siblingClass)) result.push(el)
+    return result
+  }
+
+  function toggleClassOnEach (elements, className, method) {
+    forEach.call(elements, function (el) {
+      el.classList[method](className)
+    })
+  }
+
+  function toggleHidden (el, state) {
+    el.classList[(el.hidden = state) ? 'add' : 'remove']('is-hidden')
+  }
+
+  function toggleSelected (el, state) {
+    el.setAttribute('aria-selected', '' + state)
+    el.classList[state ? 'add' : 'remove']('is-selected')
+    el.tabIndex = state ? 0 : -1
+  }
+
+  function onHashChange () {
+    var id = window.location.hash.slice(1)
+    if (!id) return
+    var tab = document.getElementById(~id.indexOf('%') ? decodeURIComponent(id) : id)
+    if (!(tab && tab.classList.contains('tab'))) return
+    'syncId' in tab.dataset ? activateTabSync.call({ tab: tab }) : activateTab.call({ tab: tab })
+  }
+})()
+</script>
+</body>
+</html>
