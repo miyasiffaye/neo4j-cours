@@ -35,6 +35,9 @@ class NeuralNetworkManager:
         self.db_manager = db_manager
     @staticmethod
     def create_network(tx, network_structure, task_type, hidden_activation="relu", output_activation=None):
+        #CREATE INDEX FOR(r: Row) ON(r.type, r.id);
+        #CREATE INDEX FOR(n: Neuron) ON(n.type);
+
         start_time = time.time()  # Record the start time
         logging.info("Starting the creation of the network structure...")
         #for row_index in range(batch_size):  # Iterate over each row
@@ -160,7 +163,7 @@ class NeuralNetworkManager:
             WITH DISTINCT row_for_inputs,inputsValue_R, input,r1,hidden,r2,output ,outputsValues_R,row_for_outputs,
             
             SUM(COALESCE(outputsValues_R.output, 0) * r1.weight) AS weighted_sum
-            
+            SKIP 0 LIMIT 1000
             SET hidden.output = CASE 
                 WHEN hidden.activation_function = 'relu' THEN CASE WHEN (weighted_sum + hidden.bias) > 0 THEN (weighted_sum + hidden.bias) ELSE 0 END
                 WHEN hidden.activation_function = 'sigmoid' THEN 1 / (1 + EXP(-(weighted_sum + hidden.bias)))
@@ -203,7 +206,7 @@ class NeuralNetworkManager:
         tx.run("""
             MATCH (output:Neuron {type: 'output'})<-[r:CONNECTED_TO]-(prev:Neuron)
             MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
-            WITH DISTINCT output,r,prev,outputsValues_R,row_for_outputs
+            WITH DISTINCT output,r,prev,outputsValues_R,row_for_outputs,
                  CASE 
                      WHEN output.activation_function = 'softmax' THEN outputsValues_R.output - outputsValues_R.expected_output
                      WHEN output.activation_function = 'sigmoid' THEN (outputsValues_R.output - outputsValues_R.expected_output) * outputsValues_R.output * (1 - outputsValues_R.output)
@@ -229,7 +232,7 @@ class NeuralNetworkManager:
             WITH n, next, $t AS t
             MATCH (n)-[r:CONNECTED_TO]->(next)
             WITH n, SUM(next.gradient * COALESCE(r.weight, 0)) AS raw_gradient, t
-            WITH n, 
+            WITH n,
                  CASE 
                      WHEN n.activation_function = 'relu' THEN CASE WHEN n.output > 0 THEN raw_gradient ELSE 0 END
                      WHEN n.activation_function = 'sigmoid' THEN raw_gradient * n.output * (1 - n.output)
@@ -349,8 +352,7 @@ class NeuralNetworkManager:
     def set_inputs(self,tx, dataset):
         for row_index, row in enumerate(dataset):
             raw_inputs = row["inputs"]
-            #normalized_inputs = self.normalized(raw_inputs)
-            normalized_inputs = raw_inputs
+            normalized_inputs = self.normalized(raw_inputs)
             for i, value in enumerate(normalized_inputs):
                 property_name = f"X_{row_index}_{i}"
                 query = f"""
@@ -614,7 +616,7 @@ if __name__ == "__main__":
     # Initialize database manager and neural network manager
     uri = "bolt://localhost:7687"
     username = "neo4j"
-    password = "Tidianecisse@2018"
+    password = ""
     database = "neuralnetwork"
 
     db_manager = Neo4jDatabaseManager(uri, username, password, database)
@@ -633,7 +635,7 @@ if __name__ == "__main__":
         beta1 = 0.9
         beta2 = 0.999
         epsilon = 1e-8
-        batch_size=32
+        batch_size=121
 
         # Generate 1000 test cases
         file_path = Path("test_cases.json")
@@ -647,32 +649,33 @@ if __name__ == "__main__":
         train_data, test_data, val_data = split_data(test_cases)
         # Step 1: Initialize
         nn_manager.initialize_nn(network_structure, task_type,output_activation,batch_size)
-        nn_manager.setInputs_expectedOutputs(train_data)
         losses = []
         val_losses = []
-        for batch in nn_manager.create_batches(train_data, batch_size):
-            for epoch in range(1, epochs + 1):
-                loss, avg_train_loss = nn_manager.train(batch, learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, task_type=task_type,epoch=epoch)
-                losses.append(loss)
-                val_losses.append(avg_train_loss)
-                #Validation
-                #val_loss = nn_manager.validate(val_data, task_type,epoch)
-                #val_losses.append(val_loss)
-                '''if val_loss < 0.01:
-                    print(f"Converged at epoch {epoch}")
-                    break'''
-        # Testing
-        print("\n--- Final Testing ---")
-        # test_loss =nn_manager.test(test_data, task_type)
-        # Plot the final aggregated loss curve
+        total_train_loss=0
+        #for batch in nn_manager.create_batches(train_data, batch_size):
+        nn_manager.setInputs_expectedOutputs(train_data)
+        for epoch in range(1, epochs + 1):
+            loss, avg_train_loss = nn_manager.train(train_data, learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, task_type=task_type,epoch=epoch)
+            losses.append(loss)
+            #val_losses.append(avg_train_loss)
+            #Validation
+            #val_loss = nn_manager.validate(val_data, task_type,epoch)
+            #val_losses.append(val_loss)
+            '''if val_loss < 0.01:
+                print(f"Converged at epoch {epoch}")
+                break'''
         plt.plot(range(1, len(losses) + 1), losses, label='Training Loss', color='blue')
-        #plt.plot(range(1, len(val_losses) + 1), val_losses, label='Validation Loss', color='orange')
-
+        # plt.plot(range(1, len(val_losses) + 1), val_losses, label='Validation Loss', color='orange')
         plt.xlabel('Epoch')
         plt.ylabel('Average Loss')
         plt.title('Training and Validation Loss Curve')
         plt.legend()  # Add legend to differentiate between the curves
         plt.show()
+        # Testing
+        print("\n--- Final Testing ---")
+    # test_loss =nn_manager.test(test_data, task_type)
+    # Plot the final aggregated loss curve
+
 
     finally:
         # Close the database connection
