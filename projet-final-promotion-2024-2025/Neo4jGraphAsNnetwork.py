@@ -63,8 +63,14 @@ class NeuralNetworkManager:
                         )
 
                 # Create the neuron in the database with a unique id per row
+                # Exemple de base à lire completer corriger
                 tx.run("""
-                    CREATE (n:Neuron {
+                    call nn.createNeuron($id,$type,$layer,$activation_function)
+                """, id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type,
+                       activation_function=activation_function)
+
+                '''tx.run("""
+                    'CREATE (n:Neuron {
                         id: $id,
                         layer: $layer,
                         type: $type,
@@ -75,7 +81,7 @@ class NeuralNetworkManager:
                         activation_function: $activation_function
                     })
                 """, id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type,
-                       activation_function=activation_function)
+                       activation_function=activation_function)'''
 
         # Create connections between layers for the current row
         for layer_index in range(len(network_structure) - 1):
