@@ -94,9 +94,7 @@ class NeuralNetworkManager:
                         math.sqrt(6) / math.sqrt(num_neurons_current + num_neurons_next)
                     )
                     tx.run("""
-                        MATCH (n1:Neuron {id: $from_id})
-                        MATCH (n2:Neuron {id: $to_id})
-                        CREATE (n1)-[:CONNECTED_TO {weight: $weight}]->(n2)
+                    call nn.createConnection($from_id,$to_id, $weight)
                     """, from_id=f"{layer_index}-{i}", to_id=f"{layer_index + 1}-{j}",
                            weight=weight)
         end_time = time.time()  # Record the end time
@@ -105,22 +103,16 @@ class NeuralNetworkManager:
 
     @staticmethod
     def create_inputs_row_node(tx, network_structure, batch_size):
+        #tx pour la transaction
         for _index in range(batch_size):
-            tx.run("""
-                CREATE (n:Row {
-                    id: $id,
-                    type: 'inputsRow'})
-                 """, id=f"{_index}")
+            #pour chaque ligne dans le batch création d'un nouveau noeud Row avec id unique
+            tx.run("""call nn.createRow($id)""", id=f"{_index}")
         layer_index,num_neurons = 0,network_structure[0]
         for row_index in range(batch_size):
             for neuron_index in range(num_neurons):
+                #creation de relations entre neurones de la couche de sortie et les noeuds Row
                 property_name = f"X_{row_index}_{neuron_index}"
-                query = f"""
-                    MATCH (n1:Row {{id: $from_id,type:'inputsRow'}})
-                    MATCH (n2:Neuron {{id: $to_id,type:'input'}})
-                    CREATE (n1)-[:CONTAINS {{output: $value,id:$inputfeatureid}}]->(n2)
-                """
-
+                query = f"""call nn.createConnOutputRow($id)"""
                 tx.run(query, from_id=f"{row_index}",
                        to_id=f"{layer_index}-{neuron_index}",
                        inputfeatureid=f"{row_index}_{neuron_index}",
