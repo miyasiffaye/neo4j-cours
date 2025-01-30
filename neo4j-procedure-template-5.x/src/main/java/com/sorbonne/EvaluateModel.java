@@ -6,29 +6,28 @@ import org.neo4j.procedure.*;
 
 import java.util.stream.Stream;
 
-public class CreateRow {
+public class EvaluateModel {
     @Context
     public Log log; //permet de loguer des messages
     @Context
     public GraphDatabaseService db;
 
-    @Procedure(name = "nn.createRow",mode = Mode.WRITE)
+    @Procedure(name = "nn.evaluateModel",mode = Mode.WRITE)
     //mode WRITE car va modifier la base de données
-    @Description("Creates a node Row for each batch entry")
-    public Stream<CreateRow.CreateResult> createRow(@Name("id") String id
+    @Description("Evaluates the model")
+    public Stream<EvaluateModel.CreateResult> evaluateModel(
     ) {
 
         /*Version proposé par l'enseignant*/
         try (Transaction tx = db.beginTx()) {
 
-            tx.execute("CREATE (n:Row {\n" +
-                    "                    id: $id,\n" +
-                    "                    type: 'inputsRow'})");
-            return Stream.of(new CreateRow.CreateResult("ok"));
+            tx.execute("MATCH (n:Neuron {type: 'output'})\n" +
+                    "            RETURN n.id AS id, n.output AS predicted");
+            return Stream.of(new EvaluateModel.CreateResult("ok"));
 
         } catch (Exception e) {
 
-            return Stream.of(new CreateRow.CreateResult("ko"));
+            return Stream.of(new EvaluateModel.CreateResult("ko"));
         }
     }
 
