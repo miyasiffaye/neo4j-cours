@@ -1,0 +1,46 @@
+package com.sorbonne;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.neo4j.harness.Neo4j;
+import org.neo4j.harness.Neo4jBuilders;
+import org.neo4j.driver.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class createConnectionTest {
+
+    private Neo4j neo4j;
+    private Driver driver;
+
+    @BeforeEach
+    void initializeNeo4j() {
+        this.neo4j = Neo4jBuilders.newInProcessBuilder()
+                .withProcedure(createConnection.class)
+                .build();
+        this.driver = GraphDatabase.driver(neo4j.boltURI(), Config.builder().withoutEncryption().build());
+    }
+
+    @AfterEach
+    void closeNeo4j() {
+        this.driver.close();
+        this.neo4j.close();
+    }
+
+    @Test
+    void shouldcreateConnectionTest() {
+
+        try (var session = driver.session()) {
+            session.run("CREATE (n1:Neuron {id: 'neuron1'})");
+            session.run("CREATE (n2:Neuron {id: 'neuron2'})");
+
+            session.run("CALL nn.createConnection('neuron1', 'neuron2', 0.5)");
+
+            var result = session.run(
+                    "MATCH (n1:Neuron {id: 'neuron1'})-[:CONNECTED_TO]->(n2:Neuron {id: 'neuron2'}) RETURN n1, n2"
+            );
+            assertThat(result.list()).hasSize(1);
+        }
+    }
+}
