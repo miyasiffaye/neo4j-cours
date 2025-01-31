@@ -21,21 +21,22 @@ public class CreateNeuron {
     @Description("")
     public Stream<CreateResult> createNeuron(@Name("id") String id,
                                        @Name("layer") String layer,
-                                       @Name("type") String type,
+                                       @Name("n_type") String type,
                                        @Name("activation_function") String activation_function
     ) {
         try (Transaction tx = db.beginTx()) {
 
           tx.execute("CREATE (n:Neuron {\n" +
-                    "id: " + id + ",\n" +
-                    "layer:" + layer + ",\n" +
-                    "type: " + type + ",\n" +
+                    "id: '" + id + "',\n" +
+                    "layer:'" + layer + "',\n" +
+                    "type: '" + type + "',\n" +
                     "bias: 0.0,\n" +
                     "output: null,\n" +
                     "m_bias: 0.0,\n" +
                     "v_bias: 0.0,\n" +
-                    "activation_function:" + activation_function + "\n" +
+                    "activation_function:'" + activation_function + "'\n" +
                     "})");
+            tx.commit();
             return Stream.of(new CreateResult("ok"));
 
         } catch (Exception e) {
