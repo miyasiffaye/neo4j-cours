@@ -1,0 +1,40 @@
+package com.sorbonne;
+
+import org.neo4j.graphdb.*;
+import org.neo4j.procedure.*;
+
+import java.util.stream.Stream;
+
+public class createConnection {
+
+    @Context
+    public GraphDatabaseService db;
+
+    @Procedure(name = "nn.createConnection", mode = Mode.WRITE)
+    @Description("Crée une connexion entre deux neurones avec un poids donné.")
+    public Stream<Result> createConnection(@Name("from_id") String fromId,
+                                           @Name("to_id") String toId,
+                                           @Name("weight") double weight) {
+        try (Transaction tx = db.beginTx()) {
+            Node n1 = tx.findNode(Label.label("Neuron"), "id", fromId);
+            Node n2 = tx.findNode(Label.label("Neuron"), "id", toId);
+
+            if (n1 == null || n2 == null) {
+                return Stream.of(new Result("Error: Neuron not found."));
+            }
+
+            Relationship rel = n1.createRelationshipTo(n2, RelationshipType.withName("CONNECTED_TO"));
+            rel.setProperty("weight", weight);
+            tx.commit();
+
+            return Stream.of(new Result("Connection created successfully!"));
+        } catch (Exception e) {
+            return Stream.of(new Result("Error: " + e.getMessage()));
+        }
+    }
+
+    public static class Result {
+        public String message;
+        public Result(String message) { this.message = message; }
+    }
+}
