@@ -40,25 +40,18 @@ public class CreateNeuron {
                                              @Name("type") String type,
                                              @Name("activation_function") String activation_function) {
         try (Transaction tx = db.beginTx()) {
-            // We made 3 changes to the original example:
-            // 1. Added tx.commit to commit the transaction and make the node available for further requests
-            // 2. Changed the type of id and layer to Long, since they are numeric and neo4j doesn't support java.lang.Integer class
-            // 3. Added ' for the type and activation function, since they are string values
-
-            tx.execute("CREATE (n:Neuron {\n" +
-                    "id: " + id + ",\n" +
-                    "layer:" + layer + ",\n" +
-                    "type: '" + type + "',\n" +
-                    "bias: 0.0,\n" +
-                    "output: null,\n" +
-                    "m_bias: 0.0,\n" +
-                    "v_bias: 0.0,\n" +
-                    "activation_function: '" + activation_function + "'\n" +
-                    "})");
+            Node neuron = tx.createNode(Label.label("Neuron"));
+            neuron.setProperty("id", id);
+            neuron.setProperty("layer", layer);
+            neuron.setProperty("type", type);
+            neuron.setProperty("bias", 0.0);
+            neuron.setProperty("m_bias", 0.0);
+            neuron.setProperty("v_bias", 0.0);
+            neuron.setProperty("activation_function", activation_function);
             tx.commit();
             return Stream.of(new CreateResult("Success"));
         } catch (Exception e) {
-            return Stream.of(new CreateResult("Failure"));
+            return Stream.of(new CreateResult("Error: " + e.getMessage()));
         }
     }
 
