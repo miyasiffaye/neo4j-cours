@@ -48,15 +48,15 @@ public class CreateNeuronTest {
     @Test
     void testCreateNeuron() {
         String creationResult = session
-                .run("CALL nn.createNeuron(123, 0, \"input\",\"softmax\")")
+                .run("CALL nn.createNeuron('123', 0, \"input\",\"softmax\")")
                 .single().get("result").asString();
         assertEquals("Success", creationResult);
 
         List<Record> matchResult = session.run("MATCH (n) RETURN n").list();
         assertEquals(1, matchResult.size());
         NodeValue neuron = (NodeValue) matchResult.get(0).get("n");
-        assertEquals(123, neuron.get("id").asInt());
-        assertEquals(0, neuron.get("layer").asInt());
+        assertEquals("123", neuron.get("id").asString());
+        assertEquals(0, neuron.get("layer").asLong());
         assertEquals("input", neuron.get("type").asString());
         assertEquals("softmax", neuron.get("activation_function").asString());
     }
