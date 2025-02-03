@@ -5,35 +5,43 @@ import org.neo4j.logging.Log;
 import org.neo4j.procedure.*;
 
 import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
 
-public class CreateOuptputBackwardPass {
+public class CreateOutputBackwardPass {
     @Context
     public Log log; //permet de loguer des messages
     @Context
-    public GraphDatabaseService db;
+    public GraphDatabaseService db; // référence à la base de données Neo4j
 
-    @Procedure(name = "nn.createOuptputBackwardPass",mode = Mode.WRITE)
-    //mode WRITE car va modifier la base de données
+    @Procedure(name = "nn.createOutputBackwardPass", mode = Mode.WRITE)
     @Description("Update outputs layers")
-    public Stream<CreateOuptputBackwardPass.CreateResult> createOuptputBackwardPass(@Name("learning_rate") int learning_rate,
-                                                                                    @Name("beta1") int beta1,
-                                                                                    @Name("beta2") int beta2,
-                                                                                    @Name("epsilon") int epsilon,
-                                                                                    @Name("t") int t
-
+    public Stream<CreateOutputBackwardPass.CreateResult> createOutputBackwardPass(
+            @Name("learning_rate") long learning_rate,
+            @Name("beta1") long beta1,
+            @Name("beta2") long beta2,
+            @Name("epsilon") long epsilon,
+            @Name("t") long t
     ) {
-
-        /*Version proposé par l'enseignant*/
         try (Transaction tx = db.beginTx()) {
 
-            tx.execute("MATCH (output:Neuron {type: 'output'})<-[r:CONNECTED_TO]-(prev:Neuron)\n" +
+            // Création d'un Map pour les paramètres
+            Map<String, Object> params = new HashMap<>();
+            params.put("learning_rate", learning_rate);
+            params.put("beta1", beta1);
+            params.put("beta2", beta2);
+            params.put("epsilon", epsilon);
+            params.put("t", t);
+
+            // Requête Cypher avec les paramètres
+            String cypherQuery = "MATCH (output:Neuron {type: 'output'})<-[r:CONNECTED_TO]-(prev:Neuron)\n" +
                     "            MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})\n" +
-                    "            WITH DISTINCT output,r,prev,outputsValues_R,row_for_outputs,\n" +
+                    "            WITH DISTINCT output, r, prev, outputsValues_R, row_for_outputs,\n" +
                     "                 CASE \n" +
                     "                     WHEN output.activation_function = 'softmax' THEN outputsValues_R.output - outputsValues_R.expected_output\n" +
                     "                     WHEN output.activation_function = 'sigmoid' THEN (outputsValues_R.output - outputsValues_R.expected_output) * outputsValues_R.output * (1 - outputsValues_R.output)\n" +
                     "                     WHEN output.activation_function = 'tanh' THEN (outputsValues_R.output - outputsValues_R.expected_output) * (1 - outputsValues_R.output^2)\n" +
-                    "                     ELSE outputsValues_R.output - outputsValues_R.expected_output  //For linear activation\n" +
+                    "                     ELSE outputsValues_R.output - outputsValues_R.expected_output  // For linear activation\n" +
                     "                 END AS gradient,\n" +
                     "                 $t AS t\n" +
                     "            MATCH (prev)-[r:CONNECTED_TO]->(output)\n" +
@@ -45,17 +53,23 @@ public class CreateOuptputBackwardPass {
                     "            SET output.v_bias = $beta2 * COALESCE(output.v_bias, 0) + (1 - $beta2) * (gradient^2)\n" +
                     "            SET output.bias = output.bias - $learning_rate * (output.m_bias / (1 - ($beta1 ^ t))) / \n" +
                     "                         (SQRT(output.v_bias / (1 - ($beta2 ^ t))) + $epsilon)\n" +
-                    "            SET output.gradient = gradient");
-            return Stream.of(new CreateOuptputBackwardPass.CreateResult("ok"));
+                    "            SET output.gradient = gradient";
+
+            // Exécution de la requête Cypher avec les paramètres
+            tx.execute(cypherQuery, params);
+
+            tx.commit(); // Valider la transaction
+
+            return Stream.of(new CreateOutputBackwardPass.CreateResult("ok"));
 
         } catch (Exception e) {
-
-            return Stream.of(new CreateOuptputBackwardPass.CreateResult("ko"));
+            // Loguer l'erreur pour pouvoir la diagnostiquer
+            log.error("Error in createOutputBackwardPass procedure: " + e.getMessage(), e);
+            return Stream.of(new CreateOutputBackwardPass.CreateResult("ko"));
         }
     }
 
     public static class CreateResult {
-
         public final String result;
 
         public CreateResult(String result) {

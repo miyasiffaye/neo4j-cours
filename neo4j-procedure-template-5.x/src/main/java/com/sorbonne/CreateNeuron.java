@@ -6,51 +6,42 @@ import org.neo4j.procedure.*;
 
 import java.util.stream.Stream;
 
-
-
-
 public class CreateNeuron {
-    // This gives us a log instance that outputs messages to the
-    // standard log, normally found under `data/log/console.log`
     @Context
-    public Log log; //permet de loguer des messages
+    public Log log;  // Pour enregistrer les messages dans les logs
     @Context
-    public GraphDatabaseService db; //référence a la base de données neo4J pour éxécuter les requêtes et manipuler des graphes
+    public GraphDatabaseService db;  // Référence à la base de données Neo4j pour exécuter des requêtes
 
-
-    // Pour utiliser call nn.createNeuron("123","0","input","sotfmax")
-    @Procedure(name = "nn.createNeuron",mode = Mode.WRITE)
-    //mode WRITE car va modifier la base de données
+    @Procedure(name = "nn.createNeuron", mode = Mode.WRITE)
     @Description("Creates a neuron")
-    public Stream<CreateResult> createNeuron(@Name("id") String id,
-                                       @Name("layer") int layer,
-                                       @Name("type") String type,
-                                       @Name("activation_function") String activation_function
+    public Stream<CreateResult> createNeuron(
+            @Name("id") String id,
+            @Name("layer") long layer,
+            @Name("type") String type,
+            @Name("activation_function") String activation_function
     ) {
-
-        /*Version proposé par l'enseignant*/
         try (Transaction tx = db.beginTx()) {
 
-            tx.execute("CREATE (n:Neuron {\n" +
-                    "id: " + id + ",\n" +
-                    "layer:" + layer + ",\n" +
-                    "type: " + type + ",\n" +
-                    "bias: 0.0,\n" +
-                    "output: null,\n" +
-                    "m_bias: 0.0,\n" +
-                    "v_bias: 0.0,\n" +
-                    "activation_function:" + activation_function + "\n" +
-                    "})");
-            return Stream.of(new CreateNeuron.CreateResult("ok"));
+            // Créer la requête Cypher avec des paramètres directement insérés dans la requête
+            String cypherQuery = "CREATE (n:Neuron {id: '" + id + "', layer: " + layer + ", type: '" + type + "', bias: 0.0, output: null, m_bias: 0.0, v_bias: 0.0, activation_function: '" + activation_function + "'})";
+
+            // Exécuter la requête Cypher
+            tx.execute(cypherQuery);
+            tx.commit();  // Assurez-vous que la transaction est bien engagée
+
+            // Si tout se passe bien, retour "ok"
+            return Stream.of(new CreateResult("ok"));
 
         } catch (Exception e) {
-
-            return Stream.of(new CreateNeuron.CreateResult("ko"));
+            // Enregistrer l'erreur dans les logs Neo4j
+            log.error("Error in createNeuron procedure: " + e.getMessage(), e);
+            // Retourner "ko" en cas d'erreur
+            return Stream.of(new CreateResult("ko"));
         }
     }
 
+    // Classe interne pour retourner le résultat
     public static class CreateResult {
-
         public final String result;
 
         public CreateResult(String result) {

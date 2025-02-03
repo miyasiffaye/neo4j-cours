@@ -12,28 +12,31 @@ public class CreateInputRow {
     @Context
     public GraphDatabaseService db;
 
-    @Procedure(name = "nn.createInputRow",mode = Mode.WRITE)
-    //mode WRITE car va modifier la base de données
+    @Procedure(name = "nn.createInputRow", mode = Mode.WRITE)
     @Description("Creates a node Row of input type for each batch entry")
-    public Stream<CreateInputRow.CreateResult> createInputRow(@Name("id") String id
-    ) {
+    public Stream<CreateInputRow.CreateResult> createInputRow(@Name("id") String id) {
 
-        /*Version proposé par l'enseignant*/
         try (Transaction tx = db.beginTx()) {
 
-            tx.execute("CREATE (n:Row {\n" +
-                    "                    id: $id,\n" +
-                    "                    type: 'inputsRow'})");
+            // Requête Cypher avec concaténation de chaînes (sans utiliser `parameters`)
+            String cypherQuery = "CREATE (n:Row {id: '" + id + "', type: 'inputsRow'})";
+
+            // Exécution de la requête Cypher
+            tx.execute(cypherQuery);
+            tx.commit(); // Assurez-vous que la transaction est bien engagée
+
+            // Si tout se passe bien, retour "ok"
             return Stream.of(new CreateInputRow.CreateResult("ok"));
 
         } catch (Exception e) {
-
+            // Enregistrer l'erreur dans les logs Neo4j
+            log.error("Error in createInputRow procedure: " + e.getMessage(), e);
+            // Retourner "ko" en cas d'erreur
             return Stream.of(new CreateInputRow.CreateResult("ko"));
         }
     }
 
     public static class CreateResult {
-
         public final String result;
 
         public CreateResult(String result) {

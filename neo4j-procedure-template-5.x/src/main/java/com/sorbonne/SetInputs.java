@@ -8,28 +8,31 @@ import java.util.stream.Stream;
 
 public class SetInputs {
     @Context
-    public Log log; //permet de loguer des messages
+    public Log log; // Permet de loguer des messages
     @Context
-    public GraphDatabaseService db;
+    public GraphDatabaseService db; // Référence à la base de données Neo4j
 
-    @Procedure(name = "nn.setInputs",mode = Mode.WRITE)
-    //mode WRITE car va modifier la base de données
+    @Procedure(name = "nn.setInputs", mode = Mode.WRITE)
     @Description("Sets the inputs")
     public Stream<SetInputs.CreateResult> setInputs(@Name("rowid") String rowid,
                                                     @Name("inputfeatureid") String inputfeatureid,
                                                     @Name("inputneuronid") String inputneuronid,
-                                                    @Name("value") int value
-    ) {
+                                                    @Name("value") long value) {
 
-        /*Version proposé par l'enseignant*/
+        /* Version proposée par l'enseignant */
         try (Transaction tx = db.beginTx()) {
 
-            tx.execute("MATCH (row:Row {{type:'inputsRow', id: $rowid}})-[r:CONTAINS {{ id: $inputfeatureid}}]->(inputs:Neuron {{type:'input', id: $inputneuronid}})\n" +
-                    "                SET r.output = $value");
+            // Exécution de la requête Cypher sans utiliser Parameters
+            String query = "MATCH (row:Row {type: 'inputsRow', id: '" + rowid + "'})-[:CONTAINS {id: '" + inputfeatureid + "'}]->(inputs:Neuron {type: 'input', id: '" + inputneuronid + "'}) " +
+                    "SET r.output = " + value;
+
+            // Exécution de la requête avec la chaîne formée
+            tx.execute(query);
+
             return Stream.of(new SetInputs.CreateResult("ok"));
 
         } catch (Exception e) {
-
+            log.error("Error in setting inputs: " + e.getMessage(), e);
             return Stream.of(new SetInputs.CreateResult("ko"));
         }
     }

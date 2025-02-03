@@ -64,9 +64,7 @@ class NeuralNetworkManager:
 
                 # Create the neuron in the database with a unique id per row
                 # Exemple de base à lire completer corriger
-                tx.run("""
-                    call nn.createNeuron($id,$type,$layer,$activation_function)
-                """, id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type,
+                tx.run("""call nn.createNeuron($id, $layer, $type, $activation_function)""", id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type,
                        activation_function=activation_function)
 
         # Create connections between layers for the current row
@@ -98,7 +96,7 @@ class NeuralNetworkManager:
             for neuron_index in range(num_neurons):
                 #creation de relations entre neurones de la couche de sortie et les noeuds Row
                 property_name = f"X_{row_index}_{neuron_index}"
-                query = f"""call nn.createConnInputNeuronInputRow($from_id, $to_id, $inputfeaturedid, $value)"""
+                query = f"""call nn.createConnInputNeuronInputRow($from_id, $to_id, $inputfeatureid, $value)"""
                 tx.run(query, from_id=f"{row_index}",
                        to_id=f"{layer_index}-{neuron_index}",
                        inputfeatureid=f"{row_index}_{neuron_index}",
@@ -114,7 +112,7 @@ class NeuralNetworkManager:
         for row_index in range(batch_size):
             for neuron_index in range(num_neurons):
                 property_name = f"Y_{row_index}_{neuron_index}"
-                query = f"""call nn.createConnOutputNeuronOutputRow($from_id, $to_i, $outputbyrowid, $value)"""
+                query = f"""call nn.createConnOutputNeuronOutputRow($from_id, $to_id, $outputbyrowid, $value)"""
 
                 tx.run(query, from_id=f"{layer_index}-{neuron_index}",
                        to_id=f"{row_index}", outputbyrowid=f"{row_index}_{neuron_index}",
@@ -143,7 +141,7 @@ class NeuralNetworkManager:
     def backward_pass_adam(tx, learning_rate, beta1, beta2, epsilon, t):
         # Step 1: Update output layer
         tx.run("""
-            call nn.createOuptputBackwardPass($learning_rate, $beta1, $beta2, $epsilon, $t)
+            call nn.createOutputBackwardPass($learning_rate, $beta1, $beta2, $epsilon, $t)
         """, learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, t=t)
 
         # Step 2: Update hidden layers
@@ -159,13 +157,13 @@ class NeuralNetworkManager:
         if task_type == "classification":
             # Cross-Entropy Loss for classification
             result = tx.run("""
-                   call nn.createLossClassification()
-                """)
+                   call nn.createLossClassification($epsilon)
+                """, epsilon=1e-8)
         elif task_type == "regression":
             # Mean Squared Error (MSE) for regression
             result = tx.run("""
-                    call nn.createLossRegression()
-                """)
+                    call nn.createLossRegression($epsilon)
+                """, epsilon=1e-8)
 
         record = result.single()
         return record["loss"] if record else 0.0
@@ -461,14 +459,13 @@ def generate_test_cases_from_csv(csv_file_path, input_columns, output_columns, l
     return test_cases
 
 # Specify the CSV file path
-csv_file_path = "D:/neo4j/neo4j-neuralnetwork/preprocessing/processed_data.csv"
+csv_file_path = "processed_data.csv"
 
 # Define the input and output columns
 #input_columns = ["HomeTeamId","AwayTeamId","HS","AS","HST","AST","HF","AF","HC","AC","HY","AY","HR","AR","B365H","B365D","B365A","BWH","BWD","BWA","BFH","BFD","BFA","PSH","PSD","PSA","WHH","WHD","WHA","1XBH","1XBD","1XBA","MaxH","MaxD","MaxA","AvgH","AvgD","AvgA","BFEH","BFED","BFEA","B365>2.5","B365<2.5","P>2.5","P<2.5","Max>2.5","Max<2.5","Avg>2.5","Avg<2.5","BFE>2.5","BFE<2.5","AHh","B365AHH","B365AHA","PAHH","PAHA","MaxAHH","MaxAHA","AvgAHH","AvgAHA","BFEAHH","BFEAHA","B365CH","B365CD","B365CA","BWCH","BWCD","BWCA","BFCH","BFCD","BFCA","PSCH","PSCD","PSCA","WHCH","WHCD","WHCA","1XBCH","1XBCD","1XBCA","MaxCH","MaxCD","MaxCA","AvgCH","AvgCD","AvgCA","BFECH","BFECD","BFECA","B365C>2.5","B365C<2.5","PC>2.5","PC<2.5","MaxC>2.5","MaxC<2.5","AvgC>2.5","AvgC<2.5","BFEC>2.5","BFEC<2.5","AHCh","B365CAHH","B365CAHA","PCAHH","PCAHA","MaxCAHH","MaxCAHA","AvgCAHH","AvgCAHA","BFECAHH","BFECAHA"]  # Replace with your actual input column names
-input_columns = ["HS","AS","HST","AST","HF","AF","HC","AC","HY","AY","HR","AR","B365H","B365D","B365A","BWH","BWD","BWA","BFH","BFD","BFA","PSH","PSD","PSA","WHH","WHD","WHA","1XBH","1XBD","1XBA","MaxH","MaxD","MaxA","AvgH","AvgD","AvgA","BFEH","BFED","BFEA","B365>2.5","B365<2.5","P>2.5","P<2.5","Max>2.5","Max<2.5","Avg>2.5","Avg<2.5","BFE>2.5","BFE<2.5","AHh","B365AHH","B365AHA","PAHH","PAHA","MaxAHH","MaxAHA","AvgAHH","AvgAHA","BFEAHH","BFEAHA","B365CH","B365CD","B365CA","BWCH","BWCD","BWCA","BFCH","BFCD","BFCA","PSCH","PSCD","PSCA","WHCH","WHCD","WHCA","1XBCH","1XBCD","1XBCA","MaxCH","MaxCD","MaxCA","AvgCH","AvgCD","AvgCA","BFECH","BFECD","BFECA","B365C>2.5","B365C<2.5","PC>2.5","PC<2.5","MaxC>2.5","MaxC<2.5","AvgC>2.5","AvgC<2.5","BFEC>2.5","BFEC<2.5","AHCh","B365CAHH","B365CAHA","PCAHH","PCAHA","MaxCAHH","MaxCAHA","AvgCAHH","AvgCAHA","BFECAHH","BFECAHA"]  # Replace with your actual input column names
-#output_columns = ["FTHG","FTAG","FTR","HTHG","HTAG","HTR"]
+input_columns = ["HS", "AS", "HF", "AF"]
 #output_columns = ["FTHG","FTAG","FTR"]
-output_columns = ["FTR"]
+output_columns = ["FTHG"]
 
 def split_data(data, train_ratio=0.9, test_ratio=0.05, val_ratio=0.05):
     """
@@ -493,7 +490,7 @@ if __name__ == "__main__":
     # Initialize database manager and neural network manager
     uri = "bolt://localhost:7687"
     username = "neo4j"
-    password = ""
+    password = "Aziza369@64!"
     database = "neuralnetwork"
 
     db_manager = Neo4jDatabaseManager(uri, username, password, database)
@@ -502,17 +499,17 @@ if __name__ == "__main__":
     try:
         # Training Parameters
 
-        network_structure = [108, 10, 1]
-        hidden_activation = "tanh" # tanh,relu
-        output_activation = "tanh"  #Softmax Or "sigmoid" for binary classification
+        network_structure = [4, 6, 1]
+        hidden_activation = "relu" # tanh,relu
+        output_activation = "linear"  #Softmax Or "sigmoid" for binary classification
         task_type = "regression" #Regression or classification
 
-        epochs = 500
-        learning_rate = 0.0005
+        epochs = 100
+        learning_rate = 0.01
         beta1 = 0.9
         beta2 = 0.999
         epsilon = 1e-8
-        batch_size=121
+        batch_size=4
 
         # Generate 1000 test cases
         file_path = Path("test_cases.json")
