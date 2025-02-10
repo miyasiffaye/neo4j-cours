@@ -45,7 +45,7 @@ public class UpdateOutputLayerAdamTest {
 
 
         try (Transaction tx = db.beginTx()) {
-            tx.execute("CALL com.sorbonne.UpdateOutputLayerAdam(0.001, 0.9, 0.999, 1e-8, 1)");
+            tx.execute("CALL nn.UpdateOutputLayerAdam(0.001, 0.9, 0.999, 1e-8, 1)");
             tx.commit();
         }
 
