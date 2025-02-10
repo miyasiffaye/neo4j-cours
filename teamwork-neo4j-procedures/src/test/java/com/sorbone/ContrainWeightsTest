@@ -1,0 +1,59 @@
+package com.sorbonne;
+
+import org.junit.jupiter.api.*;
+import org.neo4j.harness.Neo4j;
+import org.neo4j.harness.Neo4jBuilders;
+import org.neo4j.driver.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ConstrainWeightsTest {
+
+    private static Neo4j neo4j;
+    private static Driver driver;
+
+    @BeforeAll
+    public static void setUp() {
+        // Démarrer un serveur Neo4j en mémoire avec la procédure stockée
+        neo4j = Neo4jBuilders.newInProcessBuilder()
+                .withProcedure(ConstrainWeights.class)
+                .build();
+
+        // Créer le driver pour se connecter au serveur de test
+        driver = GraphDatabase.driver(neo4j.boltURI(), Config.defaultConfig());
+    }
+
+    @BeforeEach
+    public void setupData() {
+        try (Session session = driver.session()) {
+            session.run("""
+                CREATE (:Neuron)-[:CONNECTED_TO {weight: 1.5}]->(:Neuron)
+                CREATE (:Neuron)-[:CONNECTED_TO {weight: -1.5}]->(:Neuron)
+                CREATE (:Neuron)-[:CONNECTED_TO {weight: 0.5}]->(:Neuron)
+            """);
+        }
+    }
+
+    @Test
+    public void testConstrainWeights() {
+        try (Session session = driver.session()) {
+            // Exécuter la procédure stockée
+            session.run("CALL nn.ConstrainWeights()");
+
+            // Vérifier que tous les poids sont entre -1.0 et 1.0
+            Result result = session.run("MATCH ()-[r:CONNECTED_TO]->() RETURN r.weight AS weight");
+
+            while (result.hasNext()) {
+                double weight = result.next().get("weight").asDouble();
+                assertTrue(weight >= -1.0 && weight <= 1.0, "Le poids doit être entre -1.0 et 1.0");
+            }
+        }
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        // Fermer le driver et le serveur
+        driver.close();
+        neo4j.close();
+    }
+}
