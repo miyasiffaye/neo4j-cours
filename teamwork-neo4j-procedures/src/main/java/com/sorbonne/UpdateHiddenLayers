@@ -1,0 +1,63 @@
+package com.sorbonne;
+
+import org.neo4j.procedure.Mode;
+import org.neo4j.procedure.Name;
+import org.neo4j.procedure.Procedure;
+import org.neo4j.procedure.Context;
+import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Result;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class UpdateHiddenLayers {
+
+    @Context
+    public GraphDatabaseService db;
+
+    @Procedure(name = "nn.updateHiddenLayers", mode= Mode.WRITE)
+    public void updateHiddenLayers(
+            @Name("learning_rate") double learningRate,
+            @Name("beta1") double beta1,
+            @Name("beta2") double beta2,
+            @Name("epsilon") double epsilon,
+            @Name("t") long t) {
+
+        try (Transaction tx = db.beginTx()) {
+            String cypherQuery = """
+                MATCH (n:Neuron {type: 'hidden'})<-[:CONNECTED_TO]-(next:Neuron)
+                WITH n, next, $t AS t
+                MATCH (n)-[r:CONNECTED_TO]->(next)
+                WITH n, SUM(next.gradient * COALESCE(r.weight, 0)) AS raw_gradient, t
+                WITH n,
+                     CASE 
+                         WHEN n.activation_function = 'relu' THEN CASE WHEN n.output > 0 THEN raw_gradient ELSE 0 END
+                         WHEN n.activation_function = 'sigmoid' THEN raw_gradient * n.output * (1 - n.output)
+                         WHEN n.activation_function = 'tanh' THEN raw_gradient * (1 - n.output^2)
+                         ELSE raw_gradient  // For linear activation
+                     END AS gradient, t
+                MATCH (prev:Neuron)-[r_prev:CONNECTED_TO]->(n)
+                SET r_prev.m = $beta1 * COALESCE(r_prev.m, 0) + (1 - $beta1) * gradient * COALESCE(prev.output, 0)
+                SET r_prev.v = $beta2 * COALESCE(r_prev.v, 0) + (1 - $beta2) * (gradient * COALESCE(prev.output, 0))^2
+                SET r_prev.weight = r_prev.weight - $learning_rate * (r_prev.m / (1 - ($beta1 ^ t))) / 
+                                    (SQRT(r_prev.v / (1 - ($beta2 ^ t))) + $epsilon)
+                SET n.m_bias = $beta1 * COALESCE(n.m_bias, 0) + (1 - $beta1) * gradient
+                SET n.v_bias = $beta2 * COALESCE(n.v_bias, 0) + (1 - $beta2) * (gradient^2)
+                SET n.bias = n.bias - $learning_rate * (n.m_bias / (1 - ($beta1 ^ t))) / 
+                             (SQRT(n.v_bias / (1 - ($beta2 ^ t))) + $epsilon)
+                SET n.gradient = gradient
+            """;
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("learning_rate", learningRate);
+            params.put("beta1", beta1);
+            params.put("beta2", beta2);
+            params.put("epsilon", epsilon);
+            params.put("t", t);
+
+            Result result = tx.execute(cypherQuery, params);
+            tx.commit();
+        }
+    }
+}
