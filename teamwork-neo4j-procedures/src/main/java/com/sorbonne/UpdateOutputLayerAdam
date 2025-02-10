@@ -10,7 +10,7 @@ public class UpdateOutputLayerAdam{
     @Context
     public GraphDatabaseService db;
 
-    @Procedure(name = "com.sorbonne.UpdateOutputLayerAdam", mode = Mode.WRITE)
+    @Procedure(name = "nn.UpdateOutputLayerAdam", mode = Mode.WRITE)
     public void UpdateOutputLayerAdam(
             @Name("learning_rate") double learningRate,
             @Name("beta1") double beta1,
