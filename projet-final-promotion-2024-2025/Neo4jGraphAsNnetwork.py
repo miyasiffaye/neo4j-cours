@@ -463,8 +463,10 @@ csv_file_path = "processed_data.csv"
 
 # Define the input and output columns
 #input_columns = ["HomeTeamId","AwayTeamId","HS","AS","HST","AST","HF","AF","HC","AC","HY","AY","HR","AR","B365H","B365D","B365A","BWH","BWD","BWA","BFH","BFD","BFA","PSH","PSD","PSA","WHH","WHD","WHA","1XBH","1XBD","1XBA","MaxH","MaxD","MaxA","AvgH","AvgD","AvgA","BFEH","BFED","BFEA","B365>2.5","B365<2.5","P>2.5","P<2.5","Max>2.5","Max<2.5","Avg>2.5","Avg<2.5","BFE>2.5","BFE<2.5","AHh","B365AHH","B365AHA","PAHH","PAHA","MaxAHH","MaxAHA","AvgAHH","AvgAHA","BFEAHH","BFEAHA","B365CH","B365CD","B365CA","BWCH","BWCD","BWCA","BFCH","BFCD","BFCA","PSCH","PSCD","PSCA","WHCH","WHCD","WHCA","1XBCH","1XBCD","1XBCA","MaxCH","MaxCD","MaxCA","AvgCH","AvgCD","AvgCA","BFECH","BFECD","BFECA","B365C>2.5","B365C<2.5","PC>2.5","PC<2.5","MaxC>2.5","MaxC<2.5","AvgC>2.5","AvgC<2.5","BFEC>2.5","BFEC<2.5","AHCh","B365CAHH","B365CAHA","PCAHH","PCAHA","MaxCAHH","MaxCAHA","AvgCAHH","AvgCAHA","BFECAHH","BFECAHA"]  # Replace with your actual input column names
-input_columns = ["HS", "AS", "HF", "AF"]
-#output_columns = ["FTHG","FTAG","FTR"]
+input_columns = ["HomeTeamId", "AwayTeamId", "HS", "AS", "HST", "AST", "HF", "AF",
+                 "HC", "AC", "HY", "AY", "HR", "AR", "B365H", "B365D", "B365A",
+                 "MaxH", "MaxD", "MaxA", "AvgH", "AvgD", "AvgA"]
+
 output_columns = ["FTHG"]
 
 def split_data(data, train_ratio=0.9, test_ratio=0.05, val_ratio=0.05):
