@@ -1,18 +1,22 @@
 package com.sorbonne;
 
-import org.eclipse.jetty.util.Index;
-import org.neo4j.graphdb.*;
-import org.neo4j.logging.Log;
-import org.neo4j.procedure.*;
-
 import java.util.stream.Stream;
+
+//import org.eclipse.jetty.util.Index;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Transaction;
+import org.neo4j.procedure.Context;
+import org.neo4j.procedure.Description;
+import org.neo4j.procedure.Mode;
+import org.neo4j.procedure.Name;
+import org.neo4j.procedure.Procedure;
 
 
 public class CreateNeuron {
     // This gives us a log instance that outputs messages to the
     // standard log, normally found under `data/log/console.log`
-    @Context
-    public Log log;
+    //@Context
+    //public Log log;
     @Context
     public GraphDatabaseService db;
 
@@ -45,28 +49,7 @@ public class CreateNeuron {
             return Stream.of(new CreateResult("ko"));
         }
     }
-    @Procedure(name = "nn.createRelationShipsNeuron",mode = Mode.WRITE)
-    @Description("")
-    public Stream<CreateResult> createRelationShipsNeuron(
-            @Name("from_id") String from_id,
-            @Name("to_id") String to_id,
-             @Name("weight") String weight
-    ) {
-        try (Transaction tx = db.beginTx()) {
 
-            tx.execute(
-            "MATCH (n1:Neuron" + "{id:'"+ from_id +"'})\n" +
-            "MATCH (n2:Neuron" + "{id:'"+ to_id +"'})\n" +
-            "CREATE (n1)-[:CONNECTED_TO {weight:" + weight + "}]->(n2)"
-            );
-            tx.commit();
-            return Stream.of(new CreateResult("ok"));
-
-        } catch (Exception e) {
-
-            return Stream.of(new CreateResult("ko"));
-        }
-    }
     public static class CreateResult {
 
         public final String result;
