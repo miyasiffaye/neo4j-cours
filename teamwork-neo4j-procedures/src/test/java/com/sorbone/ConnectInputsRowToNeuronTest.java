@@ -41,7 +41,7 @@ public class ConnectInputsRowToNeuronTest {
     void testConnectInputsRowToNeuron() {
         try (Session session = driver.session()) {
             // Call procédure `connectInputsRowToNeuron` avec un réseau de 3 couches et un batch size de 2
-            session.run("CALL connectInputsRowToNeuron([3, 5, 2], 2)");
+            session.run("CALL nn.connectInputsRowToNeuron([3, 5, 2], 2)");
 
         }
     }

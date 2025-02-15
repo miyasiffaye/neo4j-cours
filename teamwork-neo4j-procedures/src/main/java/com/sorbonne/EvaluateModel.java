@@ -15,7 +15,7 @@ public class EvaluateModel {
     public GraphDatabaseService db;
 
     @Procedure(name = "nn.evaluateModel", mode = Mode.READ)
-    @Description("Returns a map of output neuron IDs and their predicted values.")
+    @Description("Returns output neuron IDs and their predicted values.")
     public Stream<OutputRecord> evaluateModel() {
         try (Transaction tx = db.beginTx()) {
             Result result = tx.execute("""

@@ -12,7 +12,7 @@ public class ConnectInputsRowToNeuron {
     @Context
     public Transaction tx;
 
-    @Procedure(name = "connectInputsRowToNeuron", mode = Mode.WRITE)
+    @Procedure(name = "nn.connectInputsRowToNeuron", mode = Mode.WRITE)
     @Description("Crée des nœuds Row et connecte chaque Row aux neurones d'entrée.")
     public void connectInputsRowToNeuron(
             @Name("network_structure") List<Long> networkStructure,

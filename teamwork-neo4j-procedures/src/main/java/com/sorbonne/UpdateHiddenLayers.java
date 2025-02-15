@@ -1,9 +1,6 @@
 package com.sorbonne;
 
-import org.neo4j.procedure.Mode;
-import org.neo4j.procedure.Name;
-import org.neo4j.procedure.Procedure;
-import org.neo4j.procedure.Context;
+import org.neo4j.procedure.*;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
@@ -17,6 +14,7 @@ public class UpdateHiddenLayers {
     public GraphDatabaseService db;
 
     @Procedure(name = "nn.updateHiddenLayers", mode= Mode.WRITE)
+    @Description("Update hidden layers during the backward pass")
     public void updateHiddenLayers(
             @Name("learning_rate") double learningRate,
             @Name("beta1") double beta1,

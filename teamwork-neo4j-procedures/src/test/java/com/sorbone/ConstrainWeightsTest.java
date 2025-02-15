@@ -38,7 +38,7 @@ public class ConstrainWeightsTest {
     public void testConstrainWeights() {
         try (Session session = driver.session()) {
             // Exécuter la procédure stockée
-            session.run("CALL nn.ConstrainWeights()");
+            session.run("CALL nn.constrainWeights()");
 
             // Vérifier que tous les poids sont entre -1.0 et 1.0
             Result result = session.run("MATCH ()-[r:CONNECTED_TO]->() RETURN r.weight AS weight");

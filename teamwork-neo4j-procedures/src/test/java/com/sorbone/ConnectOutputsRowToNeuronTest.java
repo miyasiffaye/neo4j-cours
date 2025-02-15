@@ -3,9 +3,14 @@ package com.sorbonne;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.neo4j.driver.Record;
+import org.neo4j.driver.internal.value.RelationshipValue;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.neo4j.driver.*;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ConnectOutputsRowToNeuronTest {
@@ -37,10 +42,17 @@ public class ConnectOutputsRowToNeuronTest {
     @Test
     void testConnectOutputsRowToNeuron() {
         try (Session session = driver.session()) {
-            // CALL procédure connectOutputsRowToNeuron avec les indices
-            session.run("CALL connectOutputsRowToNeuron(0, 0, 0)");
 
+            session.run("CREATE (n:Neuron {id: '1-2', type:'output'})");
+            session.run("CREATE (r:Row {id: '3', type:'outputsRow'})");
 
+            session.run("CALL nn.connectOutputsRowToNeuron(1, 2, 3)");
+
+            List<Record> matchResult = session.run("MATCH (:Neuron {id: '1-2'})-[c:CONTAINS]-(:Row {id: '3'}) RETURN c").list();
+            assertEquals(1, matchResult.size());
+            RelationshipValue connection = (RelationshipValue) matchResult.get(0).get("c");
+            assertEquals("3_2", connection.get("id").asString());
+            assertEquals(0.0, connection.get("output").asDouble(), 0.001);
         }
     }
 }

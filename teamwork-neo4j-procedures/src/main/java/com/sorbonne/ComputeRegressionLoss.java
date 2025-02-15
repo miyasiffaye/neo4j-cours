@@ -10,27 +10,21 @@ import java.util.stream.Stream;
 
 public class ComputeRegressionLoss {
     @Context
-    public GraphDatabaseService db;
+    public Transaction tx;
 
     @Procedure(name = "nn.computeRegressionLoss",mode = Mode.READ)
-    @Description("")
+    @Description("Compute regression loss over the neural network")
     public Stream<LossResult> computeRegressionLoss() {
-        try (Transaction tx = db.beginTx()) {
-            ResourceIterator<Node> nodes = tx.findNodes(Label.label("Neuron"), "type","output");
-            Double loss = nodes.stream()
-                .flatMap(n -> n.getRelationships(RelationshipType.withName("CONTAINS")).stream())
-                .mapToDouble(r -> {
-                    Object predictedObj = r.getProperty("output", 0.0);
-                    Object actualObj = r.getProperty("expected_output", 0.0);
-
-                    Double predicted = predictedObj instanceof Double ?
-                            (Double) predictedObj : ((Long) predictedObj).doubleValue();
-                    Double actual = actualObj instanceof Double ?
-                            (Double) actualObj : ((Long) actualObj).doubleValue();
-
-                    return Math.pow(predicted - actual, 2);
-                }).average().orElse(Double.NaN);
-            return Stream.of(new LossResult("Success", loss));
+        try {
+            return tx.execute("""
+                    MATCH (output:Neuron {type: 'output'})
+                    MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
+                    WITH outputsValues_R,
+                    COALESCE(outputsValues_R.output, 0) AS predicted,
+                    COALESCE(outputsValues_R.expected_output, 0) AS actual
+                    RETURN AVG((predicted - actual)^2) AS loss
+            """).stream()
+            .map(row -> new LossResult("Success", (Double) row.get("loss")));
         } catch (Exception e) {
             return Stream.of(new LossResult("Error: " + e.getMessage(), Double.NaN));
         }

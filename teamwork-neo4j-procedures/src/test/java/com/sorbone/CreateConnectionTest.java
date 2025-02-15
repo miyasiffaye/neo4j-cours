@@ -45,15 +45,15 @@ public class CreateConnectionTest {
 
     @Test
     void testCreateConnection() {
-        session.run("CREATE (n:Neuron {id: 1})");
-        session.run("CREATE (n:Neuron {id: 2})");
+        session.run("CREATE (n:Neuron {id: '1-1'})");
+        session.run("CREATE (n:Neuron {id: '2-1'})");
 
         String creationResult = session
-                .run("CALL nn.createConnection(1, 2, 55.55)")
+                .run("CALL nn.createConnection('1-1', '2-1', 55.55)")
                 .single().get("result").asString();
         assertEquals("Success", creationResult);
 
-        List<Record> matchResult = session.run("MATCH ({id: 1})-[c]-({id: 2}) RETURN c").list();
+        List<Record> matchResult = session.run("MATCH ({id: '1-1'})-[c]-({id: '2-1'}) RETURN c").list();
         assertEquals(1, matchResult.size());
         RelationshipValue connection = (RelationshipValue) matchResult.get(0).get("c");
         assertEquals(55.55, connection.get("weight").asDouble());

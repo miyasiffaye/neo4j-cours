@@ -22,9 +22,9 @@ public class ExpectedOutput {
     public Transaction tx;
 
 
-    @Procedure(name = "nn.ExpectedOutput", mode = Mode.READ)
+    @Procedure(name = "nn.expectedOutput", mode = Mode.READ)
     @Description("Retourne les ID et valeurs attendues des neurones de type 'output'")
-    public Stream<Output> ExpectedOutput() {
+    public Stream<Output> expectedOutput() {
         return tx.execute("MATCH (n:Neuron {type: 'output'}) RETURN n.id AS id, n.expected_output AS expected")
                 .stream()
                 .map(row -> new Output((String) row.get("id"), (Double) row.get("expected")));

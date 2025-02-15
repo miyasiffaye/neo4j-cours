@@ -44,7 +44,7 @@ class ExpectedOutputTest {
 
 
         try (Session session = driver.session()) {
-            List<Record> result = session.run("CALL nn.ExpectedOutput()").list();
+            List<Record> result = session.run("CALL nn.expectedOutput()").list();
 
 
             assertEquals(2, result.size());

@@ -32,7 +32,7 @@ public class CreateOutputsRowTest {
     void shouldCreateOutputsRow() {
         try (Session session = driver.session()) {
             // Exécuter la procédure stockée pour créer un nœud
-            session.run("CALL nn.CreateOutputsRow('123')");
+            session.run("CALL nn.createOutputsRow('123')");
 
             // Vérifier si le nœud a bien été créé
             Record record = session.run("""

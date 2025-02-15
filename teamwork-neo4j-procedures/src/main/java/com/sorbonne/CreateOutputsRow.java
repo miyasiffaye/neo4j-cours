@@ -11,7 +11,7 @@ public class CreateOutputsRow{
     @Context
     public GraphDatabaseService db;
 
-    @Procedure(name = "nn.CreateOutputsRow", mode = Mode.WRITE)
+    @Procedure(name = "nn.createOutputsRow", mode = Mode.WRITE)
     @Description("Crée un nœud de rangée de sortie pour un batch d'entraînement.")
     public Stream<ResultMessage> createOutputsRow(
             @Name("id") String id

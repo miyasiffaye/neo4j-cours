@@ -10,8 +10,9 @@ public class UpdateOutputLayerAdam{
     @Context
     public GraphDatabaseService db;
 
-    @Procedure(name = "nn.UpdateOutputLayerAdam", mode = Mode.WRITE)
-    public void UpdateOutputLayerAdam(
+    @Procedure(name = "nn.updateOutputLayerAdam", mode = Mode.WRITE)
+    @Description("Update output layer during the backward pass")
+    public void updateOutputLayerAdam(
             @Name("learning_rate") double learningRate,
             @Name("beta1") double beta1,
             @Name("beta2") double beta2,
