@@ -64,24 +64,21 @@ class NeuralNetworkManager:
 
                 # Create the neuron in the database with a unique id per row
                 # Exemple de base à lire completer corriger
-                tx.run("""
-                    call nn.createNeuron($id,$type,$layer,$activation_function)
-                """, id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type,
-                       activation_function=activation_function)
+                resp = tx.run("call nn.createNeuron($id,$layer,$type,$activation_function)", id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type, activation_function=activation_function)
 
-                '''tx.run("""
-                    'CREATE (n:Neuron {
-                        id: $id,
-                        layer: $layer,
-                        type: $type,
-                        bias: 0.0,
-                        output: null,
-                        m_bias: 0.0,
-                        v_bias: 0.0,
-                        activation_function: $activation_function
-                    })
-                """, id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type,
-                       activation_function=activation_function)'''
+#                tx.run("""
+#                    CREATE (n:Neuron {
+#                        id: $id,
+#                        layer: $layer,
+#                        type: $type,
+#                        bias: 0.0,
+#                        output: null,
+#                        m_bias: 0.0,
+#                        v_bias: 0.0,
+#                        activation_function: $activation_function
+#                    })
+#                """, id=f"{layer_index}-{neuron_index}", layer=layer_index, type=layer_type,
+#                       activation_function=activation_function)
 
         # Create connections between layers for the current row
         for layer_index in range(len(network_structure) - 1):
@@ -93,12 +90,13 @@ class NeuralNetworkManager:
                         -math.sqrt(6) / math.sqrt(num_neurons_current + num_neurons_next),
                         math.sqrt(6) / math.sqrt(num_neurons_current + num_neurons_next)
                     )
-                    tx.run("""
-                        MATCH (n1:Neuron {id: $from_id})
-                        MATCH (n2:Neuron {id: $to_id})
-                        CREATE (n1)-[:CONNECTED_TO {weight: $weight}]->(n2)
-                    """, from_id=f"{layer_index}-{i}", to_id=f"{layer_index + 1}-{j}",
-                           weight=weight)
+                    tx.run("call nn.createConnection($from_id, $to_id, $weight)", from_id=f"{layer_index}-{i}", to_id=f"{layer_index + 1}-{j}",weight=weight)
+#                    tx.run("""
+#                        MATCH (n1:Neuron {id: $from_id})
+#                        MATCH (n2:Neuron {id: $to_id})
+#                        CREATE (n1)-[:CONNECTED_TO {weight: $weight}]->(n2)
+#                    """, from_id=f"{layer_index}-{i}", to_id=f"{layer_index + 1}-{j}",
+#                           weight=weight)
         end_time = time.time()  # Record the end time
         duration = end_time - start_time  # Calculate the duration
         logging.info(f"Finished creating the network structure. Total time taken: {duration:.2f} seconds.")
@@ -106,48 +104,56 @@ class NeuralNetworkManager:
     @staticmethod
     def create_inputs_row_node(tx, network_structure, batch_size):
         for _index in range(batch_size):
-            tx.run("""
-                CREATE (n:Row {
-                    id: $id,
-                    type: 'inputsRow'})
-                 """, id=f"{_index}")
-        layer_index,num_neurons = 0,network_structure[0]
-        for row_index in range(batch_size):
-            for neuron_index in range(num_neurons):
-                property_name = f"X_{row_index}_{neuron_index}"
-                query = f"""
-                    MATCH (n1:Row {{id: $from_id,type:'inputsRow'}})
-                    MATCH (n2:Neuron {{id: $to_id,type:'input'}})
-                    CREATE (n1)-[:CONTAINS {{output: $value,id:$inputfeatureid}}]->(n2)
-                """
+            tx.run("call nn.createInputsRow($id)", id=f"{_index}")
 
-                tx.run(query, from_id=f"{row_index}",
-                       to_id=f"{layer_index}-{neuron_index}",
-                       inputfeatureid=f"{row_index}_{neuron_index}",
-                       value=0)
+#             tx.run("""
+#                 CREATE (n:Row {
+#                     id: $id,
+#                     type: 'inputsRow'})
+#                  """, id=f"{_index}")
+        layer_index,num_neurons = 0,network_structure[0]
+
+
+        tx.run("call nn.connectInputsRowToNeuron($network_structure, $batch_size)", network_structure=network_structure, batch_size=batch_size)
+
+#         for row_index in range(batch_size):
+#             for neuron_index in range(num_neurons):
+#                 property_name = f"X_{row_index}_{neuron_index}"
+#                 query = f"""
+#                     MATCH (n1:Row {{id: $from_id,type:'inputsRow'}})
+#                     MATCH (n2:Neuron {{id: $to_id,type:'input'}})
+#                     CREATE (n1)-[:CONTAINS {{output: $value,id:$inputfeatureid}}]->(n2)
+#                 """
+#
+#                 tx.run(query, from_id=f"{row_index}",
+#                        to_id=f"{layer_index}-{neuron_index}",
+#                        inputfeatureid=f"{row_index}_{neuron_index}",
+#                        value=0.0)
     #network_structure[1:-1]
     @staticmethod
     def create_outputs_row_node(tx, network_structure, batch_size):
         for _index in range(batch_size):
-            tx.run("""
-                   CREATE (n:Row {
-                       id: $id,
-                       type: 'outputsRow'})
-                    """, id=f"{_index}")
+            tx.run("call nn.createOutputsRow($id)", id=f"{_index}")
+#             tx.run("""
+#                    CREATE (n:Row {
+#                        id: $id,
+#                        type: 'outputsRow'})
+#                     """, id=f"{_index}")
         layer_index, num_neurons = len(network_structure) - 1, network_structure[len(network_structure) - 1]
         for row_index in range(batch_size):
             for neuron_index in range(num_neurons):
                 property_name = f"Y_{row_index}_{neuron_index}"
-                query = f"""
-                       
-                       MATCH (n1:Neuron {{id: $from_id,type:'output'}})
-                       MATCH (n2:Row {{id: $to_id,type:'outputsRow'}})
-                       CREATE (n1)-[:CONTAINS {{output: $value,id:$outputbyrowid}}]->(n2)
-                   """
-
-                tx.run(query, from_id=f"{layer_index}-{neuron_index}",
-                       to_id=f"{row_index}", outputbyrowid=f"{row_index}_{neuron_index}",
-                       value=0)
+                tx.run("call nn.connectOutputsRowToNeuron($layer_index, $neuron_index, $row_index)", layer_index = layer_index, neuron_index = neuron_index, row_index = row_index)
+#                 query = f"""
+#
+#                        MATCH (n1:Neuron {{id: $from_id,type:'output'}})
+#                        MATCH (n2:Row {{id: $to_id,type:'outputsRow'}})
+#                        CREATE (n1)-[:CONTAINS {{output: $value,id:$outputbyrowid}}]->(n2)
+#                    """
+#
+#                 tx.run(query, from_id=f"{layer_index}-{neuron_index}",
+#                        to_id=f"{row_index}", outputbyrowid=f"{row_index}_{neuron_index}",
+#                        value=0)
 
 
     @staticmethod
@@ -160,48 +166,50 @@ class NeuralNetworkManager:
             [r2:CONNECTED_TO]->
             (output:Neuron {type: 'output'})-[outputsValues_R:CONTAINS]->
             (row_for_outputs:Row {type:'outputsRow'})'''
-        tx.run("""
-        
-            MATCH (row_for_inputs:Row {type: 'inputsRow'})-[inputsValue_R:CONTAINS]->(input:Neuron {type: 'input'})
-            MATCH (input)-[r1:CONNECTED_TO]->(hidden:Neuron {type: 'hidden'})
-            MATCH (hidden)-[r2:CONNECTED_TO]->(output:Neuron {type: 'output'})
-            MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
-            WITH DISTINCT row_for_inputs,inputsValue_R, input,r1,hidden,r2,output ,outputsValues_R,row_for_outputs,
-            
-            SUM(COALESCE(outputsValues_R.output, 0) * r1.weight) AS weighted_sum
-            SKIP 0 LIMIT 1000
-            SET hidden.output = CASE 
-                WHEN hidden.activation_function = 'relu' THEN CASE WHEN (weighted_sum + hidden.bias) > 0 THEN (weighted_sum + hidden.bias) ELSE 0 END
-                WHEN hidden.activation_function = 'sigmoid' THEN 1 / (1 + EXP(-(weighted_sum + hidden.bias)))
-                WHEN hidden.activation_function = 'tanh' THEN (EXP(2 * (weighted_sum + hidden.bias)) - 1) / (EXP(2 * (weighted_sum + hidden.bias)) + 1)
-                ELSE weighted_sum + hidden.bias
-            END
-			
-	        WITH row_for_inputs,inputsValue_R, input,r1,hidden,r2,output ,outputsValues_R,row_for_outputs,
-	        SUM(COALESCE(hidden.output, 0) * r2.weight) AS weighted_sum
-            SET outputsValues_R.output = CASE 
-                WHEN output.activation_function = 'softmax' THEN weighted_sum  //Temporary value; softmax applied later
-                WHEN output.activation_function = 'sigmoid' THEN 1 / (1 + EXP(-(weighted_sum + output.bias)))
-                WHEN output.activation_function = 'tanh' THEN (EXP(2 * (weighted_sum + output.bias)) - 1) / (EXP(2 * (weighted_sum + output.bias)) + 1)
-                ELSE weighted_sum + output.bias
-            END
-	        WITH COLLECT(output) AS output_neurons, COLLECT(outputsValues_R) AS outputsValues_Rs
-               WITH output_neurons, outputsValues_Rs,
-                    [n IN outputsValues_Rs | exp(COALESCE(n.output, 0))] AS exp_outputs,
-                    [n IN output_neurons | n.activation_function] AS activation_functions
-               WITH output_neurons, outputsValues_Rs, exp_outputs, activation_functions, 
-                    REDUCE(sum = 0.0, x IN exp_outputs | sum + x) AS sum_exp_outputs
-               UNWIND RANGE(0, SIZE(output_neurons) - 1) AS i
-               UNWIND RANGE(0, SIZE(outputsValues_Rs) - 1) AS j
-               WITH output_neurons[i] AS neuron,outputsValues_Rs[j] AS outputRow, exp_outputs[i] AS exp_output, 
-                    activation_functions[i] AS activation_function, sum_exp_outputs
-               WITH neuron,outputRow, 
-                    CASE 
-                        WHEN activation_function = 'softmax' THEN exp_output / sum_exp_outputs
-                        ELSE outputRow.output
-                    END AS adjusted_output
-               SET outputRow.output = adjusted_output
-        """)
+        tx.run("call nn.forwardPass()")
+
+#         tx.run("""
+#
+#             MATCH (row_for_inputs:Row {type: 'inputsRow'})-[inputsValue_R:CONTAINS]->(input:Neuron {type: 'input'})
+#             MATCH (input)-[r1:CONNECTED_TO]->(hidden:Neuron {type: 'hidden'})
+#             MATCH (hidden)-[r2:CONNECTED_TO]->(output:Neuron {type: 'output'})
+#             MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
+#             WITH DISTINCT row_for_inputs,inputsValue_R, input,r1,hidden,r2,output ,outputsValues_R,row_for_outputs,
+#
+#             SUM(COALESCE(outputsValues_R.output, 0) * r1.weight) AS weighted_sum
+#             SKIP 0 LIMIT 1000
+#             SET hidden.output = CASE
+#                 WHEN hidden.activation_function = 'relu' THEN CASE WHEN (weighted_sum + hidden.bias) > 0 THEN (weighted_sum + hidden.bias) ELSE 0 END
+#                 WHEN hidden.activation_function = 'sigmoid' THEN 1 / (1 + EXP(-(weighted_sum + hidden.bias)))
+#                 WHEN hidden.activation_function = 'tanh' THEN (EXP(2 * (weighted_sum + hidden.bias)) - 1) / (EXP(2 * (weighted_sum + hidden.bias)) + 1)
+#                 ELSE weighted_sum + hidden.bias
+#             END
+#
+# 	        WITH row_for_inputs,inputsValue_R, input,r1,hidden,r2,output ,outputsValues_R,row_for_outputs,
+# 	        SUM(COALESCE(hidden.output, 0) * r2.weight) AS weighted_sum
+#             SET outputsValues_R.output = CASE
+#                 WHEN output.activation_function = 'softmax' THEN weighted_sum  //Temporary value; softmax applied later
+#                 WHEN output.activation_function = 'sigmoid' THEN 1 / (1 + EXP(-(weighted_sum + output.bias)))
+#                 WHEN output.activation_function = 'tanh' THEN (EXP(2 * (weighted_sum + output.bias)) - 1) / (EXP(2 * (weighted_sum + output.bias)) + 1)
+#                 ELSE weighted_sum + output.bias
+#             END
+# 	        WITH COLLECT(output) AS output_neurons, COLLECT(outputsValues_R) AS outputsValues_Rs
+#                WITH output_neurons, outputsValues_Rs,
+#                     [n IN outputsValues_Rs | exp(COALESCE(n.output, 0))] AS exp_outputs,
+#                     [n IN output_neurons | n.activation_function] AS activation_functions
+#                WITH output_neurons, outputsValues_Rs, exp_outputs, activation_functions,
+#                     REDUCE(sum = 0.0, x IN exp_outputs | sum + x) AS sum_exp_outputs
+#                UNWIND RANGE(0, SIZE(output_neurons) - 1) AS i
+#                UNWIND RANGE(0, SIZE(outputsValues_Rs) - 1) AS j
+#                WITH output_neurons[i] AS neuron,outputsValues_Rs[j] AS outputRow, exp_outputs[i] AS exp_output,
+#                     activation_functions[i] AS activation_function, sum_exp_outputs
+#                WITH neuron,outputRow,
+#                     CASE
+#                         WHEN activation_function = 'softmax' THEN exp_output / sum_exp_outputs
+#                         ELSE outputRow.output
+#                     END AS adjusted_output
+#                SET outputRow.output = adjusted_output
+#         """)
 
 
 
@@ -209,53 +217,56 @@ class NeuralNetworkManager:
     @staticmethod
     def backward_pass_adam(tx, learning_rate, beta1, beta2, epsilon, t):
         # Step 1: Update output layer
-        tx.run("""
-            MATCH (output:Neuron {type: 'output'})<-[r:CONNECTED_TO]-(prev:Neuron)
-            MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
-            WITH DISTINCT output,r,prev,outputsValues_R,row_for_outputs,
-                 CASE 
-                     WHEN output.activation_function = 'softmax' THEN outputsValues_R.output - outputsValues_R.expected_output
-                     WHEN output.activation_function = 'sigmoid' THEN (outputsValues_R.output - outputsValues_R.expected_output) * outputsValues_R.output * (1 - outputsValues_R.output)
-                     WHEN output.activation_function = 'tanh' THEN (outputsValues_R.output - outputsValues_R.expected_output) * (1 - outputsValues_R.output^2)
-                     ELSE outputsValues_R.output - outputsValues_R.expected_output  //For linear activation
-                 END AS gradient,
-                 $t AS t
-            MATCH (prev)-[r:CONNECTED_TO]->(output)
-            SET r.m = $beta1 * COALESCE(r.m, 0) + (1 - $beta1) * gradient * COALESCE(prev.output, 0)
-            SET r.v = $beta2 * COALESCE(r.v, 0) + (1 - $beta2) * (gradient * COALESCE(prev.output, 0))^2
-            SET r.weight = r.weight - $learning_rate * (r.m / (1 - ($beta1 ^ t))) / 
-                           (SQRT(r.v / (1 - ($beta2 ^ t))) + $epsilon)
-            SET output.m_bias = $beta1 * COALESCE(output.m_bias, 0) + (1 - $beta1) * gradient
-            SET output.v_bias = $beta2 * COALESCE(output.v_bias, 0) + (1 - $beta2) * (gradient^2)
-            SET output.bias = output.bias - $learning_rate * (output.m_bias / (1 - ($beta1 ^ t))) / 
-                         (SQRT(output.v_bias / (1 - ($beta2 ^ t))) + $epsilon)
-            SET output.gradient = gradient
-        """, learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, t=t)
+        tx.run("call nn.updateOutputLayerAdam($learning_rate, $beta1, $beta2, $epsilon, $t)", learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, t=t)
+#         tx.run("""
+#             MATCH (output:Neuron {type: 'output'})<-[r:CONNECTED_TO]-(prev:Neuron)
+#             MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
+#             WITH DISTINCT output,r,prev,outputsValues_R,row_for_outputs,
+#                  CASE
+#                      WHEN output.activation_function = 'softmax' THEN outputsValues_R.output - outputsValues_R.expected_output
+#                      WHEN output.activation_function = 'sigmoid' THEN (outputsValues_R.output - outputsValues_R.expected_output) * outputsValues_R.output * (1 - outputsValues_R.output)
+#                      WHEN output.activation_function = 'tanh' THEN (outputsValues_R.output - outputsValues_R.expected_output) * (1 - outputsValues_R.output^2)
+#                      ELSE outputsValues_R.output - outputsValues_R.expected_output  //For linear activation
+#                  END AS gradient,
+#                  $t AS t
+#             MATCH (prev)-[r:CONNECTED_TO]->(output)
+#             SET r.m = $beta1 * COALESCE(r.m, 0) + (1 - $beta1) * gradient * COALESCE(prev.output, 0)
+#             SET r.v = $beta2 * COALESCE(r.v, 0) + (1 - $beta2) * (gradient * COALESCE(prev.output, 0))^2
+#             SET r.weight = r.weight - $learning_rate * (r.m / (1 - ($beta1 ^ t))) /
+#                            (SQRT(r.v / (1 - ($beta2 ^ t))) + $epsilon)
+#             SET output.m_bias = $beta1 * COALESCE(output.m_bias, 0) + (1 - $beta1) * gradient
+#             SET output.v_bias = $beta2 * COALESCE(output.v_bias, 0) + (1 - $beta2) * (gradient^2)
+#             SET output.bias = output.bias - $learning_rate * (output.m_bias / (1 - ($beta1 ^ t))) /
+#                          (SQRT(output.v_bias / (1 - ($beta2 ^ t))) + $epsilon)
+#             SET output.gradient = gradient
+#         """, learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, t=t)
 
         # Step 2: Update hidden layers
-        tx.run("""
-            MATCH (n:Neuron {type: 'hidden'})<-[:CONNECTED_TO]-(next:Neuron)
-            WITH n, next, $t AS t
-            MATCH (n)-[r:CONNECTED_TO]->(next)
-            WITH n, SUM(next.gradient * COALESCE(r.weight, 0)) AS raw_gradient, t
-            WITH n,
-                 CASE 
-                     WHEN n.activation_function = 'relu' THEN CASE WHEN n.output > 0 THEN raw_gradient ELSE 0 END
-                     WHEN n.activation_function = 'sigmoid' THEN raw_gradient * n.output * (1 - n.output)
-                     WHEN n.activation_function = 'tanh' THEN raw_gradient * (1 - n.output^2)
-                     ELSE raw_gradient  // For linear activation
-                 END AS gradient, t
-            MATCH (prev:Neuron)-[r_prev:CONNECTED_TO]->(n)
-            SET r_prev.m = $beta1 * COALESCE(r_prev.m, 0) + (1 - $beta1) * gradient * COALESCE(prev.output, 0)
-            SET r_prev.v = $beta2 * COALESCE(r_prev.v, 0) + (1 - $beta2) * (gradient * COALESCE(prev.output, 0))^2
-            SET r_prev.weight = r_prev.weight - $learning_rate * (r_prev.m / (1 - ($beta1 ^ t))) / 
-                                (SQRT(r_prev.v / (1 - ($beta2 ^ t))) + $epsilon)
-            SET n.m_bias = $beta1 * COALESCE(n.m_bias, 0) + (1 - $beta1) * gradient
-            SET n.v_bias = $beta2 * COALESCE(n.v_bias, 0) + (1 - $beta2) * (gradient^2)
-            SET n.bias = n.bias - $learning_rate * (n.m_bias / (1 - ($beta1 ^ t))) / 
-                         (SQRT(n.v_bias / (1 - ($beta2 ^ t))) + $epsilon)
-            SET n.gradient = gradient
-        """, learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, t=t)
+        tx.run("call nn.updateHiddenLayers($learning_rate, $beta1, $beta2, $epsilon, $t)", learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, t=t)
+
+#         tx.run("""
+#             MATCH (n:Neuron {type: 'hidden'})<-[:CONNECTED_TO]-(next:Neuron)
+#             WITH n, next, $t AS t
+#             MATCH (n)-[r:CONNECTED_TO]->(next)
+#             WITH n, SUM(next.gradient * COALESCE(r.weight, 0)) AS raw_gradient, t
+#             WITH n,
+#                  CASE
+#                      WHEN n.activation_function = 'relu' THEN CASE WHEN n.output > 0 THEN raw_gradient ELSE 0 END
+#                      WHEN n.activation_function = 'sigmoid' THEN raw_gradient * n.output * (1 - n.output)
+#                      WHEN n.activation_function = 'tanh' THEN raw_gradient * (1 - n.output^2)
+#                      ELSE raw_gradient  // For linear activation
+#                  END AS gradient, t
+#             MATCH (prev:Neuron)-[r_prev:CONNECTED_TO]->(n)
+#             SET r_prev.m = $beta1 * COALESCE(r_prev.m, 0) + (1 - $beta1) * gradient * COALESCE(prev.output, 0)
+#             SET r_prev.v = $beta2 * COALESCE(r_prev.v, 0) + (1 - $beta2) * (gradient * COALESCE(prev.output, 0))^2
+#             SET r_prev.weight = r_prev.weight - $learning_rate * (r_prev.m / (1 - ($beta1 ^ t))) /
+#                                 (SQRT(r_prev.v / (1 - ($beta2 ^ t))) + $epsilon)
+#             SET n.m_bias = $beta1 * COALESCE(n.m_bias, 0) + (1 - $beta1) * gradient
+#             SET n.v_bias = $beta2 * COALESCE(n.v_bias, 0) + (1 - $beta2) * (gradient^2)
+#             SET n.bias = n.bias - $learning_rate * (n.m_bias / (1 - ($beta1 ^ t))) /
+#                          (SQRT(n.v_bias / (1 - ($beta2 ^ t))) + $epsilon)
+#             SET n.gradient = gradient
+#         """, learning_rate=learning_rate, beta1=beta1, beta2=beta2, epsilon=epsilon, t=t)
 
     @staticmethod
     def compute_loss(tx, task_type):
@@ -264,67 +275,74 @@ class NeuralNetworkManager:
             WITH DISTINCT output,r,prev,outputsValues_R,row_for_outputs'''
         if task_type == "classification":
             # Cross-Entropy Loss for classification
-            result = tx.run("""
-                    MATCH (output:Neuron {type: 'output'})
-                    MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
-                    WITH outputsValues_R,
-                         COALESCE(outputsValues_R.output, 0) AS predicted,
-                         COALESCE(outputsValues_R.expected_output, 0) AS actual,
-                         1e-10 AS epsilon
-                    RETURN SUM(
-                        -actual * LOG(predicted + epsilon) - (1 - actual) * LOG(1 - predicted + epsilon)
-                    ) AS loss
-                """)
+            result = tx.run("call nn.computeClassificationLoss()")
+#             result = tx.run("""
+#                     MATCH (output:Neuron {type: 'output'})
+#                     MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
+#                     WITH outputsValues_R,
+#                          COALESCE(outputsValues_R.output, 0) AS predicted,
+#                          COALESCE(outputsValues_R.expected_output, 0) AS actual,
+#                          1e-10 AS epsilon
+#                     RETURN SUM(
+#                         -actual * LOG(predicted + epsilon) - (1 - actual) * LOG(1 - predicted + epsilon)
+#                     ) AS loss
+#                 """)
         elif task_type == "regression":
             # Mean Squared Error (MSE) for regression
-            result = tx.run("""
-                    MATCH (output:Neuron {type: 'output'})
-                    MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
-                    WITH outputsValues_R,
-                         COALESCE(outputsValues_R.output, 0) AS predicted,
-                         COALESCE(outputsValues_R.expected_output, 0) AS actual
-                    RETURN AVG((predicted - actual)^2) AS loss
-                """)
+            result = tx.run("call nn.computeRegressionLoss()")
+            #result = tx.run("""
+            #        MATCH (output:Neuron {type: 'output'})
+            #        MATCH (output)-[outputsValues_R:CONTAINS]->(row_for_outputs:Row {type: 'outputsRow'})
+            #        WITH outputsValues_R,
+            #             COALESCE(outputsValues_R.output, 0) AS predicted,
+            #             COALESCE(outputsValues_R.expected_output, 0) AS actual
+            #        RETURN AVG((predicted - actual)^2) AS loss
+            #    """)
 
         record = result.single()
         return record["loss"] if record else 0.0
 
     @staticmethod
     def initialize_adam_parameters(tx):
-        tx.run("""
-                MATCH ()-[r:CONNECTED_TO]->()
-                SET r.m = 0.0, r.v = 0.0
-            """)
-        tx.run("""
-                MATCH (n:Neuron)
-                SET n.m_bias = 0.0, n.v_bias = 0.0
-            """)
+        tx.run("call nn.initialize_adam_neurons()")
+        tx.run("call nn.initialize_adam_connections()")
+#         tx.run("""
+#                 MATCH ()-[r:CONNECTED_TO]->()
+#                 SET r.m = 0.0, r.v = 0.0
+#             """)
+#         tx.run("""
+#                 MATCH (n:Neuron)
+#                 SET n.m_bias = 0.0, n.v_bias = 0.0
+#             """)
 
     @staticmethod
     def constrain_weights(tx):
-        tx.run("""
-                MATCH ()-[r:CONNECTED_TO]->()
-                SET r.weight = CASE 
-                    WHEN r.weight > 1.0 THEN 1.0 
-                    WHEN r.weight < -1.0 THEN -1.0 
-                    ELSE r.weight 
-                END
-            """)
+        tx.run("call nn.constrainWeights()")
+#         tx.run("""
+#                 MATCH ()-[r:CONNECTED_TO]->()
+#                 SET r.weight = CASE
+#                     WHEN r.weight > 1.0 THEN 1.0
+#                     WHEN r.weight < -1.0 THEN -1.0
+#                     ELSE r.weight
+#                 END
+#             """)
 
     @staticmethod
     def evaluate_model(tx):
-        result = tx.run("""
-            MATCH (n:Neuron {type: 'output'})
-            RETURN n.id AS id, n.output AS predicted
-        """)
+        result = tx.run("call nn.evaluateModel()")
+#         result = tx.run("""
+#             MATCH (n:Neuron {type: 'output'})
+#             RETURN n.id AS id, n.output AS predicted
+#         """)
         return {record["id"]: record["predicted"] for record in result}
 
     @staticmethod
     def expected_output(tx):
-        result = tx.run("""
-                MATCH (n:Neuron {type: 'output'})
-                RETURN n.id AS id, n.expected_output AS expected
-            """)
+        result = tx.run("call nn.expectedOutput()")
+#         result = tx.run("""
+#                 MATCH (n:Neuron {type: 'output'})
+#                 RETURN n.id AS id, n.expected_output AS expected
+#             """)
         return {record["id"]: record["expected"] for record in result}
 
     def initialize_nn(self, network_structure, task_type, activation,batch_size=32):
