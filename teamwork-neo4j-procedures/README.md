@@ -22,9 +22,9 @@ Copy teamwork-neo4j-procedures/target/procedure-template-1.0.0-SNAPSHOT.jar
 to the plugins directory of neo4j.
 
 Add following line to the conf/neo4j.conf to increase the memory
-available for neo4j up to 20gb in order to avoid out of memory errors:
+available for neo4j up to 15gb in order to avoid out of memory errors:
 ```
-server.memory.heap.max_size=20g
+server.memory.heap.max_size=15g
 ```
 
 Add our procedures to allow list in conf/neo4j.conf:
@@ -39,17 +39,14 @@ bin/neo4j console
 
 ## Configure the project
 ```
-cd neo4j-cours/projet-final-promotion-2024-2025/
+cd neo4j-cours\projet-final-promotion-2024-2025
 // Configure virtual environment
 python3 -m venv .venv
 // Activate the virtual environment in the current console window
-source .venv/bin/activate
+.venv\Script\activate
 // Install dependencies
 pip install pandas
 pip install neo4j
-// turtle demo
-sudo apt-get install python3.8-examples 
-sudo apt-get install python3-tk
 pip install matplotlib
 ```
 
@@ -67,7 +64,7 @@ MATCH (n) DETACH DELETE n
 ```
 Run python script with:
 ```
-cd projet-final-promotion-2024-2025/
-source .venv/bin/activate
-python3 Neo4jGraphAsNnetwork.py
+cd projet-final-promotion-2024-2025
+.venv\Script\activate
+python Neo4jGraphAsNnetwork.py
 ```
