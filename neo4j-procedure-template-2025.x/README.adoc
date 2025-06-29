@@ -1,5 +1,5 @@
 = Neo4j Procedure Template
-:branch: 5.x
+:branch: 2025.x
 :root: https://github.com/neo4j-examples/neo4j-procedure-template/blob/{branch}/src
 
 This project is an example you can use to build user defined procedures, functions and aggregation functions in Neo4j.
@@ -55,7 +55,9 @@ See link:{root}/main/java/example/Last.java[`Last.java`] and the link:{root}/tes
 This project uses maven, to build a jar-file with the procedure in this
 project, simply package the project with maven:
 
-    mvn clean package
+```shell
+    ./mvnw clean package
+```
 
 This will produce a jar-file,`target/procedure-template-1.0.0-SNAPSHOT.jar`,
 that can be deployed in the `plugin` directory of your Neo4j instance.

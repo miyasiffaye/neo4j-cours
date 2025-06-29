@@ -25,8 +25,7 @@ public class EntityResultExample {
 
 	@Procedure(name = "example.allnodes", mode = Mode.READ)
 	public Stream<EntityContainer> allnodes() {
-		String requete = "MATCH (n) RETURN n";
-		ResourceIterator<Node> nodes = tx.execute(requete).columnAs("n");
+		ResourceIterator<Node> nodes = tx.execute("MATCH (n) RETURN n").columnAs("n");
 		return nodes.stream().map(EntityContainer::new);
 	}
 }

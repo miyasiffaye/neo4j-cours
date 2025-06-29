@@ -3,7 +3,7 @@ name: build
 on:
   push:
     branches:
-      - 5.x
+      - 2025.x
     paths-ignore:
       - 'README.adoc'
   pull_request:
@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 'Set up JDK'
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: zulu
-          java-version: 17
+          java-version: 21
 
       - name: 'Cache Maven packages'
         uses: actions/cache@v3
